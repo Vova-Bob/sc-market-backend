@@ -26,6 +26,6 @@ RUN yarn install
 COPY . .
 RUN yarn build
 
-CMD ["node", "src/server.js"]
+CMD ["node", "dist/server.js"]
 EXPOSE 80:80
 EXPOSE 443:443
