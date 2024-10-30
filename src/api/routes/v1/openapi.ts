@@ -1,6 +1,6 @@
 import openapi from "@wesleytodd/openapi"
 import { OpenAPIV3 } from "openapi-types"
-import {env} from "../../../config/env.js";
+import { env } from "../../../config/env.js"
 
 const document: OpenAPIV3.Document = {
   openapi: "3.1.0",
