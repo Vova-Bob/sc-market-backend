@@ -5,6 +5,7 @@ declare module "i18next" {
     languages: string[]
     changeLanguage(lng: string): Promise<void>
     init(options?: any): void
+    use(module: any): i18next
   }
 
   const i18next: i18next
@@ -40,4 +41,5 @@ declare module "i18next-http-middleware" {
     lngs: string[],
     fc: any,
   ): void
+  export const LanguageDetector: any
 }
