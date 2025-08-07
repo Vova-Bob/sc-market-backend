@@ -1,3 +1,62 @@
 {
-  "greeting": "Привіт"
+  "greeting": "Привіт",
+  "success": {
+    "ok": "Успіх"
+  },
+  "errors": {
+    "internalServer": "Внутрішня помилка сервера",
+    "missingPermissions": "Бракує необхідних дозволів",
+    "noPermissions": "Немає дозволів"
+  },
+  "user": {
+    "invalid": "Невірний користувач"
+  },
+  "contractor": {
+    "invalid": "Невірний підрядник"
+  },
+  "market": {
+    "listing": {
+      "invalid": "Некоректне оголошення",
+      "contractorNotAuthorized": "Ви не маєте права оновлювати оголошення від імені цього підрядника!",
+      "notAuthorized": "Ви не маєте права оновлювати це оголошення!",
+      "cannotUpdateArchived": "Неможливо оновити архівне оголошення",
+      "cannotUpdateAuction": "Неможливо оновити аукціонні оголошення",
+      "cannotUpdateAggregateDetails": "Неможливо оновити деталі агрегованого оголошення",
+      "invalidPhoto": "Невірне фото!",
+      "invalidQuantity": "Невірна кількість",
+      "missingFields": "Відсутні обов'язкові поля",
+      "missingField": "Відсутнє обов'язкове поле",
+      "invalidStatus": "Невірний статус",
+      "invalidFormatting": "Невірний формат!",
+      "cannotBuyOwnItem": "Ви не можете купити власний товар!",
+      "tooSoonRefresh": "Занадто рано для оновлення",
+      "invalidSaleType": "Невірний тип продажу оголошення",
+      "cannotAddOtherUser": "Неможливо додати оголошення, що належить іншому користувачу",
+      "invalidPrice": "Невірна ціна",
+      "invalidExpiry": "Невірний термін дії",
+      "invalidEndTime": "Невірний час завершення"
+    },
+    "auction": {
+      "cannotEditPrice": "Неможливо змінити ціну аукціону",
+      "invalidBidIncrement": "Неможливо встановити крок ставки для неаукціонного оголошення",
+      "over": "Аукціон завершено"
+    },
+    "bid": {
+      "invalidIncrement": "Невірний крок ставки!",
+      "invalidAmount": "Невірна сума ставки!"
+    },
+    "item": {
+      "invalidName": "Невірна назва товару",
+      "invalid": "Невірний товар",
+      "nameRequired": "Потрібна назва товару",
+      "notFound": "Товар не знайдено"
+    },
+    "search": {
+      "invalidQuery": "Невірний запит"
+    },
+    "buyOrder": {
+      "invalid": "Невірне замовлення на купівлю",
+      "ownOrder": "Неможливо виконати власне замовлення"
+    }
+  }
 }

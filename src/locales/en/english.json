@@ -1,3 +1,62 @@
 {
-  "greeting": "Hello"
+  "greeting": "Hello",
+  "success": {
+    "ok": "Success"
+  },
+  "errors": {
+    "internalServer": "Internal server error",
+    "missingPermissions": "Missing required permissions",
+    "noPermissions": "No permissions"
+  },
+  "user": {
+    "invalid": "Invalid user"
+  },
+  "contractor": {
+    "invalid": "Invalid contractor"
+  },
+  "market": {
+    "listing": {
+      "invalid": "Invalid listing",
+      "contractorNotAuthorized": "You are not authorized to update listings on behalf of this contractor!",
+      "notAuthorized": "You are not authorized to update this listing!",
+      "cannotUpdateArchived": "Cannot update archived listing",
+      "cannotUpdateAuction": "Cannot update auction listings",
+      "cannotUpdateAggregateDetails": "Can't update details for aggregate listing",
+      "invalidPhoto": "Invalid photo!",
+      "invalidQuantity": "Invalid quantity",
+      "missingFields": "Missing required fields",
+      "missingField": "Missing required field",
+      "invalidStatus": "Invalid status",
+      "invalidFormatting": "Invalid formatting!",
+      "cannotBuyOwnItem": "You cannot buy your own item!",
+      "tooSoonRefresh": "Too soon to refresh",
+      "invalidSaleType": "Invalid listing sale type",
+      "cannotAddOtherUser": "Cannot add listing owned by another user",
+      "invalidPrice": "Invalid price",
+      "invalidExpiry": "Invalid expiry",
+      "invalidEndTime": "Invalid end time"
+    },
+    "auction": {
+      "cannotEditPrice": "Cannot edit price of auction",
+      "invalidBidIncrement": "Cannot set bid increment for non auction",
+      "over": "Auction is over"
+    },
+    "bid": {
+      "invalidIncrement": "Invalid bid increment!",
+      "invalidAmount": "Invalid bid amount!"
+    },
+    "item": {
+      "invalidName": "Invalid item name",
+      "invalid": "Invalid item",
+      "nameRequired": "Item name is required",
+      "notFound": "Game item not found"
+    },
+    "search": {
+      "invalidQuery": "Invalid query"
+    },
+    "buyOrder": {
+      "invalid": "Invalid buy order",
+      "ownOrder": "Can't fulfill own order"
+    }
+  }
 }
