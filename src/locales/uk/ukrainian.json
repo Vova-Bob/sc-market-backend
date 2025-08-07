@@ -57,6 +57,16 @@
     "buyOrder": {
       "invalid": "Невірне замовлення на купівлю",
       "ownOrder": "Неможливо виконати власне замовлення"
+    },
+    "offer": {
+      "deliveryHeader": "Завершіть доставку проданих предметів користувачу [{{username}}](https://sc-market.space/user/{{username}})\n",
+      "itemLine": "- [{{title}}](https://sc-market.space/market/{{id}}) ({{price}} aUEC x{{quantity}})\n",
+      "totalLine": "- Разом: {{total}} aUEC\n",
+      "userOfferLine": "- Пропозиція користувача: {{offer}} aUEC\n",
+      "note": "\nПримітка від покупця:\n> {{note}}",
+      "itemsSoldTitle": "Товари продані користувачу {{username}}",
+      "buyOrderHeader": "Виконайте замовлення на купівлю для [{{username}}](https://sc-market.space/user/{{username}})\n",
+      "buyOrderTitle": "Виконати замовлення на купівлю для {{username}}"
     }
   }
 }
