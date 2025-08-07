@@ -1,13 +1,14 @@
 import i18next from "i18next"
 import i18nextHttpMiddleware from "i18next-http-middleware"
+import en from "../../../../locales/en/english.json"
+import uk from "../../../../locales/uk/ukrainian.json"
 import { Request, Response, NextFunction } from "express"
-import { DBUser } from "../../../../clients/database/db-models.js"
+import { DBUser } from "../../../../clients/database/db-models.js" // retained for potential typed user locale usage
 
 // Default language resources
 const resources = {
-  en: {
-    translation: {},
-  },
+  en: { translation: en },
+  uk: { translation: uk },
 }
 
 // Initialize i18next
@@ -34,14 +35,11 @@ export { i18next }
 export const i18nMiddleware = i18nextHttpMiddleware.handle(i18next)
 
 // Helper function to get translation with fallback
-export const t = (key: string, options?: any): string => {
-  return i18next.t(key, options)
-}
+export const t = (key: string, options?: any): string => i18next.t(key, options)
 
 // Helper function to get translation for a specific language
-export const tWithLang = (key: string, lang: string, options?: any): string => {
-  return i18next.t(key, { lng: lang, ...options })
-}
+export const tWithLang = (key: string, lang: string, options?: any): string =>
+  i18next.t(key, { lng: lang, ...options })
 
 // Type for the request with i18n
 export interface RequestWithI18n extends Request {
@@ -56,10 +54,8 @@ export const addTranslationToRequest = (
   res: Response,
   next: NextFunction,
 ): void => {
-  req.t = (key: string, options?: any) => {
-    // Use detected language as fallback
-    return i18next.t(key, { lng: req.language, ...options })
-  }
+  // Use detected language as fallback
+  req.t = (key: string, options?: any) => i18next.t(key, { lng: req.language, ...options })
   next()
 }
 
@@ -73,11 +69,8 @@ export const addTranslationToRequestWithUser = (
     // If user is authenticated, try to get their locale preference
     if (req.user) {
       try {
-        return i18next.t(key, {
-          lng: (req.user as DBUser).locale,
-          ...options,
-        })
-      } catch (error) {
+        return i18next.t(key, { lng: (req.user as any).locale, ...options })
+      } catch {
         // Fallback to detected language if there's an error
         return i18next.t(key, { lng: req.language, ...options })
       }
