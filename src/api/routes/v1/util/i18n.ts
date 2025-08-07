@@ -11,6 +11,8 @@ const resources = {
 }
 
 // Initialize i18next
+i18next.use(i18nextHttpMiddleware.LanguageDetector)
+
 i18next.init({
   resources,
   lng: "en", // default language
