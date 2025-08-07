@@ -57,6 +57,16 @@
     "buyOrder": {
       "invalid": "Invalid buy order",
       "ownOrder": "Can't fulfill own order"
+    },
+    "offer": {
+      "deliveryHeader": "Complete the delivery of sold items to [{{username}}](https://sc-market.space/user/{{username}})\n",
+      "itemLine": "- [{{title}}](https://sc-market.space/market/{{id}}) ({{price}} aUEC x{{quantity}})\n",
+      "totalLine": "- Total: {{total}} aUEC\n",
+      "userOfferLine": "- User Offer: {{offer}} aUEC\n",
+      "note": "\nNote from buyer:\n> {{note}}",
+      "itemsSoldTitle": "Items Sold to {{username}}",
+      "buyOrderHeader": "Complete buy order for [{{username}}](https://sc-market.space/user/{{username}})\n",
+      "buyOrderTitle": "Complete Buy Order for {{username}}"
     }
   }
 }

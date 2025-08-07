@@ -1151,23 +1151,28 @@ marketRouter.post(
       }
 
       let total = 0
-      let message = `Complete the delivery of sold items to [${user.username}](https://sc-market.space/user/${user.username})\n`
+      let message = req.t("market.offer.deliveryHeader", {
+        username: user.username,
+      })
 
       for (const { quantity, listing } of listings) {
         total += quantity * +listing.listing.price
-        message += `- [${listing.details.title}](https://sc-market.space/market/${
-          listing.listing.listing_id
-        }) (${(+listing.listing.price).toLocaleString(
-          "en-us",
-        )} aUEC x${quantity.toLocaleString("en-us")})\n`
+        message += req.t("market.offer.itemLine", {
+          title: listing.details.title,
+          id: listing.listing.listing_id,
+          price: (+listing.listing.price).toLocaleString("en-us"),
+          quantity: quantity.toLocaleString("en-us"),
+        })
       }
 
-      message += `- Total: ${total.toLocaleString("en-us")} aUEC\n`
-      message += `- User Offer: ${(offer || total).toLocaleString(
-        "en-us",
-      )} aUEC\n`
+      message += req.t("market.offer.totalLine", {
+        total: total.toLocaleString("en-us"),
+      })
+      message += req.t("market.offer.userOfferLine", {
+        offer: (offer || total).toLocaleString("en-us"),
+      })
       if (note) {
-        message += `\nNote from buyer:\n> ${note || "None"}`
+        message += req.t("market.offer.note", { note })
       }
 
       const {
@@ -1184,7 +1189,9 @@ marketRouter.post(
           actor_id: user.user_id,
           kind: "Delivery",
           cost: (offer || total).toString(),
-          title: `Items Sold to ${user.username}`,
+          title: req.t("market.offer.itemsSoldTitle", {
+            username: user.username,
+          }),
           description: message,
         },
         listings,
@@ -3337,14 +3344,19 @@ marketRouter.post(
       )
 
       const total = buy_order.quantity * buy_order.price
-      let message = `Complete buy order for [${buyer.username}](https://sc-market.space/user/${buyer.username})\n`
+      let message = req.t("market.offer.buyOrderHeader", {
+        username: buyer.username,
+      })
 
-      message += `- [${listing.details.title}](https://sc-market.space/market/${
-        listing.game_item_id
-      }) (${(+buy_order.price).toLocaleString(
-        "en-us",
-      )} aUEC x${buy_order.quantity.toLocaleString("en-us")})\n`
-      message += `- Total: ${total.toLocaleString("en-us")} aUEC\n`
+      message += req.t("market.offer.itemLine", {
+        title: listing.details.title,
+        id: listing.game_item_id,
+        price: (+buy_order.price).toLocaleString("en-us"),
+        quantity: buy_order.quantity.toLocaleString("en-us"),
+      })
+      message += req.t("market.offer.totalLine", {
+        total: total.toLocaleString("en-us"),
+      })
 
       const { offer, session, discord_invite } = await createOffer(
         {
@@ -3356,7 +3368,9 @@ marketRouter.post(
           actor_id: user.user_id,
           kind: "Delivery",
           cost: (buy_order.quantity * buy_order.price).toString(),
-          title: `Complete Buy Order for ${buyer.username}`,
+          title: req.t("market.offer.buyOrderTitle", {
+            username: buyer.username,
+          }),
           description: message,
         },
         [],
