@@ -69,7 +69,7 @@ export const addTranslationToRequestWithUser = (
     // If user is authenticated, try to get their locale preference
     if (req.user) {
       try {
-        return i18next.t(key, { lng: (req.user as any).locale, ...options })
+        return i18next.t(key, { lng: (req.user as DBUser).locale, ...options })
       } catch {
         // Fallback to detected language if there's an error
         return i18next.t(key, { lng: req.language, ...options })
