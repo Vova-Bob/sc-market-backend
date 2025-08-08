@@ -200,7 +200,7 @@ profileRouter.put(
       if (updatedUsers.length === 0) {
         res.status(500).json(
           createErrorResponse({
-            message: "Failed to update user locale",
+            message: req.t("profiles.updateLocaleFailed"),
             status: "error",
           }),
         )
