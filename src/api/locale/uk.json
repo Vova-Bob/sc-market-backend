@@ -95,6 +95,9 @@
     "itemNameRequired": "Потрібна назва товару",
     "gameItemNotFound": "Ігровий предмет не знайдено"
   },
+  "wiki": {
+    "queryTooShort": "Запит занадто короткий"
+  },
   "success": {
     "generic": "Успіх"
   }
