@@ -167,7 +167,9 @@ chatsRouter.get(
     try {
       chat = await database.getChat({ order_id: req.params.order_id })
     } catch {
-      res.status(404).json(createErrorResponse({ error: "Invalid chat" }))
+      res
+        .status(404)
+        .json(createErrorResponse({ error: req.t("chats.invalid") }))
       return
     }
 
@@ -223,7 +225,9 @@ chatsRouter.get(
     try {
       chat = await database.getChat({ session_id: session_id })
     } catch {
-      res.status(404).json(createErrorResponse({ error: "Invalid chat" }))
+      res
+        .status(404)
+        .json(createErrorResponse({ error: req.t("chats.invalid") }))
       return
     }
 
@@ -296,10 +300,12 @@ chatsRouter.post(
       content: string
     }
 
-    if (!content) {
-      res.status(400).json(createErrorResponse({ error: "Invalid content" }))
-      return
-    }
+      if (!content) {
+        res
+          .status(400)
+          .json(createErrorResponse({ error: req.t("chats.invalidContent") }))
+        return
+      }
 
     const chat = req.chat!
 
@@ -327,7 +333,7 @@ chatsRouter.post(
       }
     }
 
-    res.json(createResponse({ result: "Success" }))
+      res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -389,11 +395,13 @@ chatsRouter.post(
       }),
     )
 
-    // TODO: Process blocked users and user access settings
-    if (!users.every(Boolean)) {
-      res.status(400).json(createErrorResponse({ error: "Invalid user!" }))
-      return
-    }
+      // TODO: Process blocked users and user access settings
+      if (!users.every(Boolean)) {
+        res
+          .status(400)
+          .json(createErrorResponse({ error: req.t("chats.invalidUser") }))
+        return
+      }
 
     users.push(user)
 
