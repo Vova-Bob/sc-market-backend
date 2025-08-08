@@ -141,5 +141,9 @@
     "invalidRating": "Invalid rating",
     "reviewExists": "A review has already been left on this order",
     "threadExists": "Order already has a thread"
+  },
+  "profiles": {
+    "userNotFound": "User not found",
+    "updateLocaleFailed": "Failed to update user locale"
   }
 }
