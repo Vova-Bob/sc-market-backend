@@ -45,6 +45,11 @@
     "invalid": "Invalid comment",
     "invalidArgument": "Invalid argument"
   },
+  "chats": {
+    "invalid": "Invalid chat",
+    "invalidContent": "Invalid content",
+    "invalidUser": "Invalid user"
+  },
   "transactions": {
     "invalid": "Invalid transaction",
     "missingFields": "Missing required fields",

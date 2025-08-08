@@ -19,10 +19,12 @@ export async function valid_chat(
   let chat
   try {
     chat = await database.getChat({ chat_id: req.params.chat_id })
-  } catch {
-    res.status(404).json(createErrorResponse({ error: "Invalid chat" }))
-    return
-  }
+    } catch {
+      res
+        .status(404)
+        .json(createErrorResponse({ error: req.t("chats.invalid") }))
+      return
+    }
 
   req.chat = chat
   next()
@@ -72,9 +74,11 @@ export async function related_to_chat(
 
   const result = await can_view_chat(user, chat)
 
-  if (!result.result) {
-    res.status(403).json(createErrorResponse({ error: "Not authorized" }))
-  }
+    if (!result.result) {
+      res
+        .status(403)
+        .json(createErrorResponse({ error: req.t("errors.notAuthorized") }))
+    }
 
   req.order = result.order || undefined
   req.offer_session = result.offer_session || undefined

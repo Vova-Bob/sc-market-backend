@@ -45,6 +45,11 @@
     "invalid": "Некоректний коментар",
     "invalidArgument": "Некоректний аргумент"
   },
+  "chats": {
+    "invalid": "Некоректний чат",
+    "invalidContent": "Некоректний вміст",
+    "invalidUser": "Некоректний користувач"
+  },
   "transactions": {
     "invalid": "Некоректна транзакція",
     "missingFields": "Відсутні необхідні поля",
