@@ -59,6 +59,10 @@
     "invalidService": "Invalid service",
     "invalidPhoto": "Invalid photo"
   },
+  "ships": {
+    "noneProvided": "No ships provided",
+    "invalidProvided": "Invalid ships provided"
+  },
   "market": {
     "invalidListing": "Invalid listing",
     "invalidQuantity": "Invalid quantity",

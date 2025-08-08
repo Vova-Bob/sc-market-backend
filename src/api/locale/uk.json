@@ -59,6 +59,10 @@
     "invalidService": "Некоректна послуга",
     "invalidPhoto": "Некоректне фото"
   },
+  "ships": {
+    "noneProvided": "Жодного корабля не надано",
+    "invalidProvided": "Надано некоректні кораблі"
+  },
   "market": {
     "invalidListing": "Некоректне оголошення",
     "invalidQuantity": "Некоректна кількість",
