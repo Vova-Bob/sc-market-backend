@@ -95,6 +95,9 @@
     "itemNameRequired": "Item name is required",
     "gameItemNotFound": "Game item not found"
   },
+  "wiki": {
+    "queryTooShort": "Query too short"
+  },
   "success": {
     "generic": "Success"
   }

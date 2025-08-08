@@ -103,7 +103,7 @@ wikiRouter.get("/imagesearch/:query", async function (req, res) {
     const query = req.params["query"]
 
     if (query.length < 3) {
-      res.status(400).json({ error: "Too short" })
+      res.status(400).json({ error: req.t("wiki.queryTooShort") })
       return
     }
 
@@ -128,7 +128,7 @@ wikiRouter.get("/itemsearch/:query", async function (req, res) {
   const query = req.params["query"]
 
   if (query.length < 3) {
-    res.status(400).json({ error: "Too short" })
+    res.status(400).json({ error: req.t("wiki.queryTooShort") })
     return
   }
 
