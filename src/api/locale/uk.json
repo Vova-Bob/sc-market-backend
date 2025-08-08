@@ -43,6 +43,12 @@
     "invalid": "Некоректний коментар",
     "invalidArgument": "Некоректний аргумент"
   },
+  "services": {
+    "invalidContractor": "Некоректний підрядник",
+    "invalidUser": "Некоректний користувач",
+    "invalidService": "Некоректна послуга",
+    "invalidPhoto": "Некоректне фото"
+  },
   "success": {
     "generic": "Успіх"
   }

@@ -195,7 +195,9 @@ servicesRouter.post(
       if (!contractor_obj) {
         res
           .status(400)
-          .json(createErrorResponse({ error: "Invalid contractor" }))
+          .json(
+            createErrorResponse({ error: req.t("services.invalidContractor") }),
+          )
         return
       }
       contractor_id = contractor_obj.contractor_id
@@ -203,7 +205,11 @@ servicesRouter.post(
       if (
         !(await has_permission(contractor_id, user.user_id, "manage_orders"))
       ) {
-        res.status(403).json(createErrorResponse({ error: "No permissions" }))
+        res
+          .status(403)
+          .json(
+            createErrorResponse({ error: req.t("errors.noPermissions") }),
+          )
         return
       }
     } else {
@@ -231,7 +237,7 @@ servicesRouter.post(
       await createServicePhotos(service.service_id, photos)
     } catch {}
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -289,7 +295,11 @@ servicesRouter.get(
         { noBalance: true },
       )
     } catch {
-      res.status(400).json(createErrorResponse({ error: "Invalid user" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ error: req.t("services.invalidUser") }),
+        )
       return
     }
 
@@ -483,12 +493,20 @@ servicesRouter.put(
     try {
       service = await database.getService({ service_id })
     } catch {
-      res.status(400).json(createErrorResponse({ error: "Invalid service" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ error: req.t("services.invalidService") }),
+        )
       return
     }
 
     if (!service) {
-      res.status(400).json(createErrorResponse({ error: "Invalid service" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ error: req.t("services.invalidService") }),
+        )
       return
     }
 
@@ -534,12 +552,20 @@ servicesRouter.put(
           "manage_orders",
         ))
       ) {
-        res.status(400).json(createErrorResponse({ error: "No permissions!" }))
+        res
+          .status(400)
+          .json(
+            createErrorResponse({ error: req.t("errors.noPermissions") }),
+          )
         return
       }
     } else {
       if (service.user_id !== user.user_id) {
-        res.status(400).json(createErrorResponse({ error: "No permissions!" }))
+        res
+          .status(400)
+          .json(
+            createErrorResponse({ error: req.t("errors.noPermissions") }),
+          )
         return
       }
     }
@@ -575,7 +601,11 @@ servicesRouter.put(
           service_id,
         })
       } catch (e: any) {
-        res.status(400).json(createErrorResponse({ error: "Invalid photo!" }))
+        res
+          .status(400)
+          .json(
+            createErrorResponse({ error: req.t("services.invalidPhoto") }),
+          )
         return
       }
     }
@@ -587,7 +617,7 @@ servicesRouter.put(
       } catch {}
     }
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -633,12 +663,20 @@ servicesRouter.get(
     try {
       service = await database.getService({ service_id })
     } catch {
-      res.status(400).json(createErrorResponse({ error: "Invalid service" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ error: req.t("services.invalidService") }),
+        )
       return
     }
 
     if (!service) {
-      res.status(400).json(createErrorResponse({ error: "Invalid service" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ error: req.t("services.invalidService") }),
+        )
       return
     }
 

@@ -43,6 +43,12 @@
     "invalid": "Invalid comment",
     "invalidArgument": "Invalid argument"
   },
+  "services": {
+    "invalidContractor": "Invalid contractor",
+    "invalidUser": "Invalid user",
+    "invalidService": "Invalid service",
+    "invalidPhoto": "Invalid photo"
+  },
   "success": {
     "generic": "Success"
   }
