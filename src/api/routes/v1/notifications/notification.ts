@@ -12,7 +12,7 @@ notificationRouter.post("/update", userAuthorized, async (req, res, next) => {
 
   for (const { notification_id, read } of values) {
     if (!notification_id || !read) {
-      res.status(400).json({ error: "Invalid formatting" })
+      res.status(400).json({ error: req.t("errors.invalidFormatting") })
       return
     }
 
@@ -22,7 +22,7 @@ notificationRouter.post("/update", userAuthorized, async (req, res, next) => {
     })
 
     if (!notifications.length) {
-      res.status(400).json({ error: "Invalid notification" })
+      res.status(400).json({ error: req.t("errors.invalidNotification") })
       return
     }
 
@@ -32,7 +32,7 @@ notificationRouter.post("/update", userAuthorized, async (req, res, next) => {
     )
   }
 
-  res.json({ status: "Success" })
+  res.json({ status: req.t("common.success") })
 })
 
 notificationRouter.post("/delete", userAuthorized, async (req, res, next) => {
@@ -45,12 +45,12 @@ notificationRouter.post("/delete", userAuthorized, async (req, res, next) => {
     })
 
     if (!notification_id) {
-      res.status(400).json({ error: "Invalid formatting" })
+      res.status(400).json({ error: req.t("errors.invalidFormatting") })
       return
     }
 
     if (!notifications.length) {
-      res.status(400).json({ error: "Invalid notification" })
+      res.status(400).json({ error: req.t("errors.invalidNotification") })
       return
     }
 
@@ -60,7 +60,7 @@ notificationRouter.post("/delete", userAuthorized, async (req, res, next) => {
     })
   }
 
-  res.json({ status: "Success" })
+  res.json({ status: req.t("common.success") })
 })
 
 notificationRouter.get("/:page", userAuthorized, async (req, res, next) => {

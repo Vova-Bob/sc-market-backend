@@ -17,7 +17,12 @@ export function validate_optional_username(path: string) {
     } catch {
       res
         .status(404)
-        .json(createErrorResponse({ error: "User not found", username }))
+        .json(
+          createErrorResponse({
+            error: req.t("errors.userNotFound"),
+            username,
+          }),
+        )
       return
     }
 

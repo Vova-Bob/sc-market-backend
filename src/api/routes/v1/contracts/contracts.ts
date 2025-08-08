@@ -269,7 +269,7 @@ contractsRouter.post(
     if (req.contract!.customer_id === user.user_id && !req.body.contractor) {
       res.status(400).json(
         createErrorResponse({
-          message: "You cannot create an offer on your own contract",
+          message: req.t("errors.cannotCreateOfferOwnContract"),
         }),
       )
       return
@@ -284,7 +284,9 @@ contractsRouter.post(
       } catch {
         res
           .status(400)
-          .json(createErrorResponse({ message: "Invalid contractor" }))
+          .json(
+            createErrorResponse({ message: req.t("errors.invalidContractor") }),
+          )
         return
       }
       if (
@@ -296,8 +298,7 @@ contractsRouter.post(
       ) {
         res.status(403).json(
           createErrorResponse({
-            message:
-              "You do not have permission to make offers on behalf of this contractor",
+            message: req.t("errors.noPermissionOfferOnBehalf"),
           }),
         )
         return

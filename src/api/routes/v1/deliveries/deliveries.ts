@@ -80,7 +80,7 @@ deliveryRouter.post("/create", userAuthorized, async (req, res, next) => {
     status: "pending",
   })
 
-  res.json({ result: "Success" })
+  res.json({ result: req.t("common.success") })
 })
 
 export const deliveriesRouter = express.Router()

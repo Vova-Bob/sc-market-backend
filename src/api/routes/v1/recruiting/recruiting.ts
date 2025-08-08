@@ -28,7 +28,7 @@ export async function contractorRecruiting(
     try {
       contractor = await database.getContractor({ spectrum_id })
     } catch (e) {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("errors.invalidContractor") })
       return
     }
 
@@ -44,7 +44,7 @@ export async function contractorRecruiting(
 
     next()
   } else {
-    res.status(401).json({ error: "Unauthenticated" })
+    res.status(401).json({ error: req.t("errors.unauthenticated") })
   }
 }
 
@@ -184,7 +184,7 @@ recruitingRouter.get("/post/:post_id", async function (req, res) {
   const post = await database.getRecruitingPost({ post_id })
 
   if (!post) {
-    res.status(400).json({ message: "Invalid post" })
+    res.status(400).json({ message: req.t("errors.invalidPost") })
     return
   }
 
@@ -198,7 +198,7 @@ recruitingRouter.get("/post/:post_id/comments", async function (req, res) {
   const post = await database.getRecruitingPost({ post_id })
 
   if (!post) {
-    res.status(400).json({ message: "Invalid post" })
+    res.status(400).json({ message: req.t("errors.invalidPost") })
     return
   }
 
@@ -221,7 +221,7 @@ recruitingRouter.post("/post/:post_id/update", async function (req, res) {
   const post = await database.getRecruitingPost({ post_id })
 
   if (!post) {
-    res.status(400).json({ message: "Invalid post" })
+    res.status(400).json({ message: req.t("errors.invalidPost") })
     return
   }
 
@@ -270,7 +270,7 @@ recruitingRouter.post(
     const user = req.user as User
 
     if (!post) {
-      res.status(400).json({ message: "Invalid post" })
+      res.status(400).json({ message: req.t("errors.invalidPost") })
       return
     }
 
@@ -299,7 +299,7 @@ recruitingRouter.post(
     const user = req.user as User
 
     if (!post) {
-      res.status(400).json({ message: "Invalid post" })
+      res.status(400).json({ message: req.t("errors.invalidPost") })
       return
     }
 
@@ -316,7 +316,7 @@ recruitingRouter.post(
       const comment = await database.getComment({ comment_id: reply_to })
 
       if (!comment) {
-        res.status(400).json({ message: "Invalid comment" })
+        res.status(400).json({ message: req.t("errors.invalidComment") })
         return
       }
 
@@ -347,7 +347,7 @@ recruitingRouter.get("/org/:spectrum_id", async function (req, res) {
   const contractor = await database.getContractorSafe({ spectrum_id })
 
   if (!contractor) {
-    res.status(400).json({ message: "Invalid contractor" })
+    res.status(400).json({ message: req.t("errors.invalidContractor") })
     return
   }
 
@@ -356,7 +356,7 @@ recruitingRouter.get("/org/:spectrum_id", async function (req, res) {
   })
 
   if (!post) {
-    res.status(400).json({ message: "Invalid post" })
+    res.status(400).json({ message: req.t("errors.invalidPost") })
     return
   }
 

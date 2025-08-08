@@ -16,6 +16,7 @@ import {
   sortingMethods,
 } from "./types.js"
 import { has_permission } from "../util/permissions.js"
+import { t } from "../util/i18n.js"
 
 const userListingLock = new AsyncLock()
 const contractorListingLock = new AsyncLock()
@@ -77,22 +78,22 @@ export async function verify_listings(
     try {
       listing = await database.getMarketListingComplete(listing_id)
     } catch {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: t("errors.invalidListing") })
       return
     }
 
     if (!listing) {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: t("errors.invalidListing") })
       return
     }
 
     if (listing.listing.status !== "active") {
-      res.status(404).json({ error: "Invalid listing" })
+      res.status(404).json({ error: t("errors.invalidListing") })
       return
     }
 
     if (listing.listing.quantity_available < quantity || quantity < 1) {
-      res.status(400).json({ error: "Invalid quantity" })
+      res.status(400).json({ error: t("errors.invalidQuantity") })
       return
     }
 
@@ -286,13 +287,13 @@ export async function handle_quantity_update(
   }
 
   if (quantity_available < 0) {
-    res.status(400).json({ error: "Invalid quantity" })
+    res.status(400).json({ error: t("errors.invalidQuantity") })
     return
   }
 
   await database.updateMarketListing(listing.listing_id, { quantity_available })
 
-  res.json({ result: "Success" })
+  res.json({ result: t("common.success") })
 }
 
 export function formatListingSlug(title: string) {

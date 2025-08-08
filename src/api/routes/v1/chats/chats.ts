@@ -167,7 +167,9 @@ chatsRouter.get(
     try {
       chat = await database.getChat({ order_id: req.params.order_id })
     } catch {
-      res.status(404).json(createErrorResponse({ error: "Invalid chat" }))
+      res
+        .status(404)
+        .json(createErrorResponse({ error: req.t("errors.invalidChat") }))
       return
     }
 
@@ -223,7 +225,9 @@ chatsRouter.get(
     try {
       chat = await database.getChat({ session_id: session_id })
     } catch {
-      res.status(404).json(createErrorResponse({ error: "Invalid chat" }))
+      res
+        .status(404)
+        .json(createErrorResponse({ error: req.t("errors.invalidChat") }))
       return
     }
 
@@ -297,7 +301,9 @@ chatsRouter.post(
     }
 
     if (!content) {
-      res.status(400).json(createErrorResponse({ error: "Invalid content" }))
+      res
+        .status(400)
+        .json(createErrorResponse({ error: req.t("errors.invalidContent") }))
       return
     }
 
@@ -327,7 +333,7 @@ chatsRouter.post(
       }
     }
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("common.success") }))
   },
 )
 
@@ -391,7 +397,13 @@ chatsRouter.post(
 
     // TODO: Process blocked users and user access settings
     if (!users.every(Boolean)) {
-      res.status(400).json(createErrorResponse({ error: "Invalid user!" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({
+            error: req.t("errors.invalidUserExclamation"),
+          }),
+        )
       return
     }
 
@@ -404,14 +416,14 @@ chatsRouter.post(
         chat_id: chat!.chat_id,
       })
       if (eqSet(new Set(participants), new Set(users.map((u) => u?.user_id)))) {
-        res.json(createResponse({ result: "Success" }))
+        res.json(createResponse({ result: req.t("common.success") }))
         return
       }
     }
 
     await database.insertChat(Array.from(new Set(users.map((x) => x!.user_id))))
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("common.success") }))
   },
 )
 

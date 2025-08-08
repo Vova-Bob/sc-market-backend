@@ -16,7 +16,9 @@ export async function related_to_order(
   try {
     order = await database.getOrder({ order_id: order_id })
   } catch (e) {
-    res.status(404).json(createErrorResponse({ error: "Invalid order" }))
+    res
+      .status(404)
+      .json(createErrorResponse({ error: req.t("errors.invalidOrder") }))
     return
   }
 
@@ -38,7 +40,7 @@ export async function related_to_order(
   if (unrelated) {
     res.status(403).json(
       createErrorResponse({
-        error: "You are not authorized to view this order",
+        error: req.t("errors.notAuthorizedViewOrder"),
       }),
     )
     return

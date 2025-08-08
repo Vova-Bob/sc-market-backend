@@ -44,7 +44,7 @@ shipRouter.post("/import", userAuthorized, async (req, res) => {
 
   if (!validate(ships, ShipsFileSchema).valid) {
     res.status(400).json({
-      error: "Invalid ships provided",
+      error: req.t("errors.invalidShipsProvided"),
     })
     return
   }

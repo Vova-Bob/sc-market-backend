@@ -22,7 +22,7 @@ transactionRouter.get(
         transaction_id: transaction_id,
       })
     } catch (e) {
-      res.status(400).json({ error: "Invalid transaction" })
+      res.status(400).json({ error: req.t("errors.invalidTransaction") })
       return
     }
     const user = req.user as User
@@ -120,7 +120,7 @@ transactionRouter.post("/create", userAuthorized, async (req, res, next) => {
   }
 
   if (amount < 1) {
-    res.status(400).json({ error: "Invalid transaction amount" })
+    res.status(400).json({ error: req.t("errors.invalidTransactionAmount") })
     return
   }
 
@@ -131,7 +131,7 @@ transactionRouter.post("/create", userAuthorized, async (req, res, next) => {
         spectrum_id: contractor_recipient_id,
       })
     } catch {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("errors.invalidContractor") })
       return
     }
   }
@@ -141,7 +141,7 @@ transactionRouter.post("/create", userAuthorized, async (req, res, next) => {
     try {
       target_user = await database.getUser({ username: user_recipient_id })
     } catch {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("errors.invalidContractor") })
       return
     }
   }
@@ -178,7 +178,7 @@ transactionRouter.post("/create", userAuthorized, async (req, res, next) => {
     user_recipient_id: target_user && target_user.user_id,
   })
 
-  res.json({ result: "Success" })
+  res.json({ result: req.t("common.success") })
 })
 
 transactionRouter.post(
@@ -192,7 +192,7 @@ transactionRouter.post(
       spectrum_id: spectrum_id,
     })
     if (!contractor) {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("errors.invalidContractor") })
       return
     }
 
@@ -234,7 +234,7 @@ transactionRouter.post(
     }
 
     if (amount < 1) {
-      res.status(400).json({ error: "Invalid transaction amount" })
+      res.status(400).json({ error: req.t("errors.invalidTransactionAmount") })
       return
     }
 
@@ -245,7 +245,7 @@ transactionRouter.post(
           spectrum_id: contractor_recipient_id,
         })
       } catch {
-        res.status(400).json({ error: "Invalid contractor" })
+        res.status(400).json({ error: req.t("errors.invalidContractor") })
         return
       }
     }
@@ -260,7 +260,7 @@ transactionRouter.post(
       try {
         target_user = await database.getUser({ username: user_recipient_id })
       } catch {
-        res.status(400).json({ error: "Invalid contractor" })
+        res.status(400).json({ error: req.t("errors.invalidContractor") })
         return
       }
     }
@@ -292,7 +292,7 @@ transactionRouter.post(
       user_recipient_id: target_user && target_user.user_id,
     })
     // TODO: Make the above an atomic function in PSQL, so that the same dollar isn't spent twice
-    res.json({ result: "Success" })
+    res.json({ result: req.t("common.success") })
   },
 )
 
@@ -346,7 +346,7 @@ transactionsRouter.get(
       spectrum_id: spectrum_id,
     })
     if (!contractor) {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("errors.invalidContractor") })
       return
     }
 

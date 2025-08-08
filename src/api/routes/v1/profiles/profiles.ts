@@ -48,7 +48,7 @@ profileRouter.post("/auth/link", userAuthorized, async (req, res, next) => {
       res.status(402).json(
         createErrorResponse({
           message: result.error,
-          status: "error",
+          status: req.t("common.error"),
         }),
       )
     }
@@ -104,7 +104,7 @@ profileRouter.post(
     //
     //     await database.updateContractor({contractor_id: contractor.contractor_id}, {size: data.data.members})
     //
-    //     res.json({result: "Success"})
+    //     res.json({result: req.t("common.success")})
     // } catch (e) {
     //     console.error(e)
     // }
@@ -200,8 +200,8 @@ profileRouter.put(
       if (updatedUsers.length === 0) {
         res.status(500).json(
           createErrorResponse({
-            message: "Failed to update user locale",
-            status: "error",
+            message: req.t("errors.failedToUpdateUserLocale"),
+            status: req.t("common.error"),
           }),
         )
         return
@@ -209,7 +209,7 @@ profileRouter.put(
 
       res.json(
         createResponse({
-          message: "Locale updated successfully",
+          message: req.t("success.localeUpdated"),
           locale: updatedUsers[0].locale,
         }),
       )
@@ -217,8 +217,8 @@ profileRouter.put(
       logger.error("Error updating user locale:", error)
       res.status(500).json(
         createErrorResponse({
-          message: "Internal server error",
-          status: "error",
+          message: req.t("errors.internalServerError"),
+          status: req.t("common.error"),
         }),
       )
     }
@@ -248,12 +248,12 @@ profileRouter.post(
 
     // Do checks first
     if (avatar_url && !avatar_url.match(external_resource_regex)) {
-      res.status(400).json({ error: "Invalid URL" })
+      res.status(400).json({ error: req.t("errors.invalidUrl") })
       return
     }
 
     if (banner_url && !banner_url.match(external_resource_regex)) {
-      res.status(400).json({ error: "Invalid URL" })
+      res.status(400).json({ error: req.t("errors.invalidUrl") })
       return
     }
 
@@ -261,7 +261,7 @@ profileRouter.post(
       display_name &&
       (display_name.length > 30 || display_name.length === 0)
     ) {
-      res.status(400).json({ error: "Invalid display name" })
+      res.status(400).json({ error: req.t("errors.invalidDisplayName") })
       return
     }
 
@@ -304,7 +304,7 @@ profileRouter.post(
       await cdn.removeResource(old_banner)
     }
 
-    res.json({ result: "Success", ...newUsers[0] })
+    res.json({ result: req.t("common.success"), ...newUsers[0] })
   },
 )
 
@@ -327,7 +327,7 @@ profileRouter.post(
 
     // TODO: Check for actual URL
     if (!webhook_url || !name) {
-      res.status(400).json({ error: "Invalid arguments" })
+      res.status(400).json({ error: req.t("errors.invalidArguments") })
       return
     }
 
@@ -340,10 +340,10 @@ profileRouter.post(
         user.user_id,
       )
     } catch (e) {
-      res.status(400).json({ error: "Invalid actions" })
+      res.status(400).json({ error: req.t("errors.invalidActions") })
       return
     }
-    res.json({ result: "Success" })
+    res.json({ result: req.t("common.success") })
   },
 )
 
@@ -361,13 +361,13 @@ profileRouter.post(
 
     // Do checks first
     if (!webhook_id) {
-      res.status(400).json({ error: "Invalid arguments" })
+      res.status(400).json({ error: req.t("errors.invalidArguments") })
       return
     }
 
     const webhook = await database.getNotificationWebhook({ webhook_id })
     if (webhook?.user_id !== user.user_id) {
-      res.status(403).json({ error: "Unauthorized" })
+      res.status(403).json({ error: req.t("errors.unauthorized") })
       return
     }
 
@@ -375,7 +375,7 @@ profileRouter.post(
       webhook_id,
       user_id: user.user_id,
     })
-    res.json({ result: "Success" })
+    res.json({ result: req.t("common.success") })
   },
 )
 
@@ -398,7 +398,7 @@ profileRouter.get("/user/:username/reviews", async (req, res, next) => {
   try {
     user = await database.getUser({ username: username }, { noBalance: true })
   } catch (e) {
-    res.status(400).json({ error: "Invalid user" })
+    res.status(400).json({ error: req.t("errors.invalidUser") })
     return
   }
 
@@ -430,14 +430,14 @@ profileRouter.get("/user/:username", async (req, res, next) => {
     try {
       user = await database.getUser({ username: username }, { noBalance: true })
     } catch (e) {
-      res.status(400).json({ error: "Invalid user" })
+      res.status(400).json({ error: req.t("errors.invalidUser") })
       return
     }
 
     res.json(await serializePublicProfile(user, { discord: !!requester }))
   } catch (e) {
     console.error(e)
-    res.status(400).json({ error: "Invalid user" })
+    res.status(400).json({ error: req.t("errors.invalidUser") })
     return
   }
 })
@@ -456,7 +456,7 @@ profileRouter.post(
     const { discord_order_share, discord_public } = req.body
 
     if (discord_order_share === undefined && discord_public === undefined) {
-      res.status(400).json({ error: "Invalid body" })
+      res.status(400).json({ error: req.t("errors.invalidBody") })
       return
     }
 
@@ -465,7 +465,7 @@ profileRouter.post(
       discord_public,
     })
 
-    res.json({ result: "Success" })
+    res.json({ result: req.t("common.success") })
     return
   },
 )
@@ -484,7 +484,7 @@ profileRouter.post(
         try {
           cobj = await database.getContractor({ spectrum_id: contractor })
         } catch {
-          res.status(403).json({ error: "Invalid contractor" })
+          res.status(403).json({ error: req.t("errors.invalidContractor") })
           return
         }
 
@@ -492,7 +492,7 @@ profileRouter.post(
           !(await database.getMemberRoles(cobj.contractor_id, user.user_id))
             .length
         ) {
-          res.status(403).json({ error: "Invalid contractor" })
+          res.status(403).json({ error: req.t("errors.invalidContractor") })
           return
         }
 
@@ -505,7 +505,7 @@ profileRouter.post(
         await database.updateUserAvailability(user.user_id, null, selections)
       }
 
-      res.json({ result: "Success" })
+      res.json({ result: req.t("common.success") })
       return
     } catch (e) {
       console.error(e)
@@ -524,7 +524,7 @@ profileRouter.get(
     try {
       cobj = await database.getContractor({ spectrum_id })
     } catch {
-      res.status(403).json({ error: "Invalid contractor" })
+      res.status(403).json({ error: req.t("errors.invalidContractor") })
       return
     }
 
@@ -578,7 +578,7 @@ profileRouter.post(
         discord_thread_channel_id: "1072580369251041330",
       },
     )
-    res.json({ result: "Success" })
+    res.json({ result: req.t("common.success") })
     return
   },
 )

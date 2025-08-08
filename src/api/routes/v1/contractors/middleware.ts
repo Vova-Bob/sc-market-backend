@@ -15,7 +15,9 @@ export async function valid_contractor(
     req.contractor = await database.getContractor({ spectrum_id })
     next()
   } catch {
-    res.status(400).json(createErrorResponse({ error: "Invalid contractor" }))
+    res
+      .status(400)
+      .json(createErrorResponse({ error: req.t("errors.invalidContractor") }))
     return
   }
 }
@@ -30,21 +32,27 @@ export async function org_authorized(
     if (user.banned) {
       res
         .status(418)
-        .json(createErrorResponse({ error: "Internal server error" }))
+        .json(
+          createErrorResponse({ error: req.t("errors.internalServerError") }),
+        )
       return
     }
 
     const spectrum_id = req.params["spectrum_id"]
     const contractor = await database.getContractor({ spectrum_id })
     if (!(await is_member(contractor.contractor_id, user.user_id))) {
-      res.status(403).json(createErrorResponse({ error: "Unauthorized" }))
+      res
+        .status(403)
+        .json(createErrorResponse({ error: req.t("errors.unauthorized") }))
       return
     } else {
       req.contractor = contractor
       next()
     }
   } else {
-    res.status(401).json(createErrorResponse({ error: "Unauthenticated" }))
+    res
+      .status(401)
+      .json(createErrorResponse({ error: req.t("errors.unauthenticated") }))
     return
   }
 }
@@ -56,7 +64,9 @@ export function org_permission(permission_name: keyof DBContractorRole) {
       if (user.banned) {
         res
           .status(418)
-          .json(createErrorResponse({ error: "Internal server error" }))
+          .json(
+            createErrorResponse({ error: req.t("errors.internalServerError") }),
+          )
         return
       }
 
@@ -67,7 +77,9 @@ export function org_permission(permission_name: keyof DBContractorRole) {
       } catch (e) {
         res
           .status(400)
-          .json(createErrorResponse({ error: "Invalid contractor" }))
+          .json(
+            createErrorResponse({ error: req.t("errors.invalidContractor") }),
+          )
         return
       }
 
@@ -78,7 +90,9 @@ export function org_permission(permission_name: keyof DBContractorRole) {
           permission_name,
         ))
       ) {
-        res.status(403).json(createErrorResponse({ error: "Unauthorized" }))
+        res
+          .status(403)
+          .json(createErrorResponse({ error: req.t("errors.unauthorized") }))
         return
       }
 
@@ -86,7 +100,9 @@ export function org_permission(permission_name: keyof DBContractorRole) {
 
       next()
     } else {
-      res.status(401).json(createErrorResponse({ error: "Unauthenticated" }))
+      res
+        .status(401)
+        .json(createErrorResponse({ error: req.t("errors.unauthenticated") }))
     }
   }
 }
@@ -105,7 +121,10 @@ export function validate_optional_spectrum_id(path: string) {
       res
         .status(404)
         .json(
-          createErrorResponse({ error: "Contractor not found", contractor }),
+          createErrorResponse({
+            error: req.t("errors.contractorNotFound"),
+            contractor,
+          }),
         )
       return
     }

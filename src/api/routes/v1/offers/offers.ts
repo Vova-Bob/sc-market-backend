@@ -241,7 +241,8 @@ oapi.schema("OfferSessionDetails", {
     order_id: {
       type: "string",
       nullable: true,
-      description: "Order ID associated with this offer session when status is 'Accepted'",
+      description:
+        "Order ID associated with this offer session when status is 'Accepted'",
       example: "123e4567-e89b-12d3-a456-426614174000",
     },
     offers: {
@@ -633,7 +634,7 @@ offerRouter.put(
         res.json(createResponse({ order_id: order.order_id }))
         return
       } else {
-        res.json(createResponse({ result: "Success" }))
+        res.json(createResponse({ result: req.t("common.success") }))
         return
       }
     } else {
@@ -658,14 +659,18 @@ offerRouter.put(
         if (!service) {
           res
             .status(400)
-            .json(createErrorResponse({ error: "Invalid service" }))
+            .json(
+              createErrorResponse({ error: req.t("errors.invalidService") }),
+            )
           return
         }
 
         if (service.user_id && service.user_id !== session.assigned_id) {
           res
             .status(400)
-            .json(createErrorResponse({ error: "Invalid service" }))
+            .json(
+              createErrorResponse({ error: req.t("errors.invalidService") }),
+            )
           return
         }
 
@@ -675,7 +680,9 @@ offerRouter.put(
         ) {
           res
             .status(400)
-            .json(createErrorResponse({ error: "Invalid service" }))
+            .json(
+              createErrorResponse({ error: req.t("errors.invalidService") }),
+            )
           return
         }
       }
@@ -711,7 +718,7 @@ offerRouter.put(
         console.error(e)
       }
 
-      res.json(createResponse({ status: "Success" }))
+      res.json(createResponse({ status: req.t("common.success") }))
     }
   },
 )
@@ -771,7 +778,11 @@ offersRouter.post(
     if (req.offer_session!.thread_id) {
       res
         .status(409)
-        .json(createErrorResponse({ message: "Offer already has a thread!" }))
+        .json(
+          createErrorResponse({
+            message: req.t("errors.offerAlreadyHasThread"),
+          }),
+        )
       return
     }
 
@@ -791,12 +802,12 @@ offersRouter.post(
       logger.error("Failed to create thread", e)
       res
         .status(500)
-        .json(createErrorResponse({ message: "An unknown error occurred" }))
+        .json(createErrorResponse({ message: req.t("errors.unknown") }))
       return
     }
     res.status(201).json(
       createResponse({
-        result: "Success",
+        result: req.t("common.success"),
       }),
     )
   },
@@ -944,20 +955,26 @@ offersRouter.get(
     const args = await convert_offer_search_query(req)
     if (!(args.contractor_id || args.assigned_id || args.customer_id)) {
       if (user.role !== "admin") {
-        res.status(400).json(createErrorResponse("Missing permissions."))
+        res
+          .status(400)
+          .json(createErrorResponse(req.t("errors.missingPermissions")))
         return
       }
     }
 
     if (args.contractor_id) {
       if (!(await is_member(args.contractor_id, user.user_id))) {
-        res.status(400).json(createErrorResponse("Missing permissions."))
+        res
+          .status(400)
+          .json(createErrorResponse(req.t("errors.missingPermissions")))
         return
       }
     }
 
     if (args.assigned_id && args.assigned_id !== user.user_id) {
-      res.status(400).json(createErrorResponse("Missing permissions."))
+      res
+        .status(400)
+        .json(createErrorResponse(req.t("errors.missingPermissions")))
       return
     }
 
