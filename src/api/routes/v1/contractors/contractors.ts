@@ -709,7 +709,7 @@ contractorsRouter.post(
       banner,
       member_count: 1,
     })
-    res.status(201).json(createResponse({ result: "Success" }))
+    res.status(201).json(createResponse({ result: req.t("success.generic") }))
     return
   },
 )
@@ -844,7 +844,9 @@ contractorsRouter.get(
     })
 
     if (!invite) {
-      res.status(404).json(createErrorResponse({ message: "Invalid invite" }))
+      res
+        .status(404)
+        .json(createErrorResponse({ message: req.t("contractors.invalidInvite") }))
       return
     }
 
@@ -915,7 +917,9 @@ contractorsRouter.post(
     })
 
     if (!invite) {
-      res.status(404).json(createErrorResponse({ message: "Invalid invite" }))
+      res
+        .status(404)
+        .json(createErrorResponse({ message: req.t("contractors.invalidInvite") }))
       return
     }
 
@@ -929,7 +933,9 @@ contractorsRouter.post(
     )
 
     if (role) {
-      res.status(409).json(createErrorResponse({ message: "Already member" }))
+      res
+        .status(409)
+        .json(createErrorResponse({ message: req.t("contractors.alreadyMember") }))
       return
     }
 
@@ -957,7 +963,7 @@ contractorsRouter.post(
       role_id: contractor.default_role,
     })
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -1443,7 +1449,7 @@ contractorsRouter.post(
       name: name,
     })
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -1551,14 +1557,22 @@ contractorsRouter.put(
     })
 
     if (!role) {
-      res.status(404).json(createErrorResponse({ message: "Invalid role." }))
+      res
+        .status(404)
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidRole") }),
+        )
       return
     }
 
     if (
       !(await can_manage_role(contractor.contractor_id, role_id, user.user_id))
     ) {
-      res.status(403).json(createErrorResponse({ message: "No permissions." }))
+      res
+        .status(403)
+        .json(
+          createErrorResponse({ message: req.t("errors.noPermissions") }),
+        )
       return
     }
     if (
@@ -1586,7 +1600,7 @@ contractorsRouter.put(
       },
     )
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -1659,21 +1673,31 @@ contractorsRouter.delete(
     })
 
     if (!role) {
-      res.status(400).json(createErrorResponse({ message: "Invalid role." }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidRole") }),
+        )
       return
     }
 
     if (
       !(await can_manage_role(contractor.contractor_id, role_id, user.user_id))
     ) {
-      res.status(400).json(createErrorResponse({ message: "No permissions." }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ message: req.t("errors.noPermissions") }),
+        )
       return
     }
 
     if (role_id === contractor.default_role) {
       res
         .status(403)
-        .json(createErrorResponse({ message: "This role cannot be removed." }))
+        .json(
+          createErrorResponse({ message: req.t("contractors.roleCannotBeRemoved") }),
+        )
       return
     }
 
@@ -1682,7 +1706,9 @@ contractorsRouter.delete(
       contractor_id: contractor.contractor_id,
     })
 
-    res.status(204).json(createResponse({ result: "Success" }))
+    res
+      .status(204)
+      .json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -1765,7 +1791,11 @@ contractorsRouter.post(
     try {
       target = await database.getUser({ username })
     } catch (e) {
-      res.status(404).json(createErrorResponse({ message: "Invalid user" }))
+      res
+        .status(404)
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidUser") }),
+        )
       return
     }
 
@@ -1778,12 +1808,20 @@ contractorsRouter.post(
       target.user_id,
     )
     if (!target_is_member) {
-      res.status(404).json(createErrorResponse({ message: "Invalid user" }))
+      res
+        .status(404)
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidUser") }),
+        )
       return
     }
 
     if (!role) {
-      res.status(404).json(createErrorResponse({ message: "Invalid role" }))
+      res
+        .status(404)
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidRole") }),
+        )
       return
     }
 
@@ -1795,7 +1833,11 @@ contractorsRouter.post(
 
     if (outranked) {
       // You are outranked or equal
-      res.status(403).json(createErrorResponse({ message: "No permissions" }))
+      res
+        .status(403)
+        .json(
+          createErrorResponse({ message: req.t("errors.noPermissions") }),
+        )
       return
     }
 
@@ -1804,7 +1846,7 @@ contractorsRouter.post(
       role_id,
     })
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -1886,7 +1928,11 @@ contractorsRouter.delete(
     try {
       target = await database.getUser({ username })
     } catch (e) {
-      res.status(400).json(createErrorResponse({ message: "Invalid user" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidUser") }),
+        )
       return
     }
 
@@ -1899,12 +1945,20 @@ contractorsRouter.delete(
       target.user_id,
     )
     if (!target_is_member) {
-      res.status(400).json(createErrorResponse({ message: "Invalid user." }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidUser") }),
+        )
       return
     }
 
     if (!role) {
-      res.status(400).json(createErrorResponse({ message: "Invalid role." }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidRole") }),
+        )
       return
     }
 
@@ -1916,14 +1970,20 @@ contractorsRouter.delete(
 
     if (outranked) {
       // You are outranked or equal
-      res.status(403).json(createErrorResponse({ message: "No permissions." }))
+      res
+        .status(403)
+        .json(
+          createErrorResponse({ message: req.t("errors.noPermissions") }),
+        )
       return
     }
 
     if (role_id === contractor.default_role) {
       res
         .status(403)
-        .json(createErrorResponse({ message: "This role cannot be removed." }))
+        .json(
+          createErrorResponse({ message: req.t("contractors.roleCannotBeRemoved") }),
+        )
       return
     }
 
@@ -1932,7 +1992,7 @@ contractorsRouter.delete(
       role_id,
     })
 
-    res.json(createErrorResponse({ result: "Success" }))
+    res.json(createErrorResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -2006,7 +2066,11 @@ contractorsRouter.delete(
       try {
         target = await database.getUser({ username })
       } catch (e) {
-        res.status(400).json(createErrorResponse({ message: "Invalid user" }))
+        res
+          .status(400)
+          .json(
+            createErrorResponse({ message: req.t("contractors.invalidUser") }),
+          )
         return
       }
 
@@ -2015,7 +2079,11 @@ contractorsRouter.delete(
         target.user_id,
       )
       if (!target_is_member) {
-        res.status(400).json(createErrorResponse({ message: "Invalid user" }))
+        res
+          .status(400)
+          .json(
+            createErrorResponse({ message: req.t("contractors.invalidUser") }),
+          )
         return
       }
 
@@ -2027,7 +2095,11 @@ contractorsRouter.delete(
 
       if (outranked) {
         // You are outranked or equal
-        res.status(403).json(createErrorResponse({ message: "No permissions" }))
+        res
+          .status(403)
+          .json(
+            createErrorResponse({ message: req.t("errors.noPermissions") }),
+          )
         return
       }
 
@@ -2040,12 +2112,14 @@ contractorsRouter.delete(
         target.user_id,
       )
 
-      res.json(createResponse({ result: "Success" }))
+      res.json(createResponse({ result: req.t("success.generic") }))
     } catch (e) {
       console.error(e)
       res
         .status(500)
-        .json(createErrorResponse({ message: "Internal server error" }))
+        .json(
+          createErrorResponse({ message: req.t("errors.internalServer") }),
+        )
       return
     }
   },
@@ -2121,12 +2195,20 @@ contractorsRouter.put(
 
     // Do checks first
     if (avatar_url && !avatar_url.match(external_resource_regex)) {
-      res.status(400).json(createErrorResponse({ message: "Invalid URL" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ message: req.t("errors.invalidUrl") }),
+        )
       return
     }
 
     if (banner_url && !banner_url.match(external_resource_regex)) {
-      res.status(400).json(createErrorResponse({ message: "Invalid URL" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ message: req.t("errors.invalidUrl") }),
+        )
       return
     }
 
@@ -2182,7 +2264,7 @@ contractorsRouter.put(
       await cdn.removeResource(old_banner)
     }
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -2261,7 +2343,9 @@ contractorsRouter.post(
     if (!webhook_url || !name) {
       res
         .status(400)
-        .json(createErrorResponse({ message: "Invalid arguments" }))
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidArguments") }),
+        )
       return
     }
 
@@ -2274,11 +2358,15 @@ contractorsRouter.post(
         undefined,
       )
     } catch (e) {
-      res.status(400).json(createErrorResponse({ message: "Invalid actions" }))
+      res
+        .status(400)
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidActions") }),
+        )
       return
     }
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -2347,7 +2435,9 @@ contractorsRouter.delete(
 
     const webhook = await database.getNotificationWebhook({ webhook_id })
     if (webhook?.contractor_id !== contractor.contractor_id) {
-      res.status(403).json(createErrorResponse({ message: "Unauthorized" }))
+      res
+        .status(403)
+        .json(createErrorResponse({ message: req.t("errors.unauthorized") }))
       return
     }
 
@@ -2356,7 +2446,7 @@ contractorsRouter.delete(
       contractor_id: contractor.contractor_id,
     })
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -2495,7 +2585,9 @@ contractorsRouter.post(
     if (!Number.isSafeInteger(max_uses)) {
       res
         .status(400)
-        .json(createErrorResponse({ message: "Invalid arguments" }))
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidArguments") }),
+        )
       return
     }
 
@@ -2504,7 +2596,7 @@ contractorsRouter.post(
       contractor_id: contractor.contractor_id,
     })
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -2575,13 +2667,17 @@ contractorsRouter.delete(
     if (!invite_id) {
       res
         .status(400)
-        .json(createErrorResponse({ message: "Invalid arguments" }))
+        .json(
+          createErrorResponse({ message: req.t("contractors.invalidArguments") }),
+        )
       return
     }
 
     const inviteCode = await database.getInviteCode({ invite_id })
     if (inviteCode?.contractor_id !== contractor.contractor_id) {
-      res.status(403).json(createErrorResponse({ message: "Unauthorized" }))
+      res
+        .status(403)
+        .json(createErrorResponse({ message: req.t("errors.unauthorized") }))
       return
     }
 
@@ -2589,7 +2685,7 @@ contractorsRouter.delete(
       invite_id,
       contractor_id: contractor.contractor_id,
     })
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -2737,7 +2833,11 @@ contractorsRouter.post(
       try {
         users.push(await database.getUser({ username }))
       } catch {
-        res.status(400).json(createErrorResponse({ message: "Invalid user!" }))
+        res
+          .status(400)
+          .json(
+            createErrorResponse({ message: req.t("contractors.invalidUser") }),
+          )
         return
       }
     }
@@ -2748,7 +2848,11 @@ contractorsRouter.post(
         contractor.contractor_id,
       )
       if (role) {
-        res.status(400).json(createErrorResponse({ message: "Invalid user!" }))
+        res
+          .status(400)
+          .json(
+            createErrorResponse({ message: req.t("contractors.invalidUser") }),
+          )
         return
       }
     }
@@ -2763,7 +2867,7 @@ contractorsRouter.post(
 
     await createContractorInviteNotification(invites[0])
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -2781,7 +2885,11 @@ contractorsRouter.post(
       } catch (e) {
         res
           .status(400)
-          .json(createErrorResponse({ message: "Invalid contractor" }))
+          .json(
+            createErrorResponse({
+              message: req.t("contractors.invalidContractor"),
+            }),
+          )
         return
       }
 
@@ -2814,7 +2922,7 @@ contractorsRouter.post(
         { size: data.data.members },
       )
 
-      res.json(createResponse({ result: "Success" }))
+      res.json(createResponse({ result: req.t("success.generic") }))
     } catch (e) {
       console.error(e)
     }
@@ -2888,7 +2996,9 @@ contractorsRouter.post(
         if (!invites.length) {
           res
             .status(400)
-            .json(createErrorResponse({ message: "Invalid invite" }))
+            .json(
+              createErrorResponse({ message: req.t("contractors.invalidInvite") }),
+            )
           return
         }
 
@@ -2899,7 +3009,9 @@ contractorsRouter.post(
         if (role) {
           res
             .status(400)
-            .json(createErrorResponse({ message: "Already member" }))
+            .json(
+              createErrorResponse({ message: req.t("contractors.alreadyMember") }),
+            )
           return
         }
 
@@ -2927,7 +3039,11 @@ contractorsRouter.post(
         if (!invites.length) {
           res
             .status(400)
-            .json(createErrorResponse({ message: "Invalid contractor" }))
+            .json(
+              createErrorResponse({
+                message: req.t("contractors.invalidContractor"),
+              }),
+            )
           return
         }
       }
@@ -2948,12 +3064,14 @@ contractorsRouter.post(
         role_id: contractor.default_role,
       })
 
-      res.json(createResponse({ result: "Success" }))
+      res.json(createResponse({ result: req.t("success.generic") }))
     } catch (e) {
       console.error(e)
       res
         .status(500)
-        .json(createErrorResponse({ message: "Internal server error" }))
+        .json(
+          createErrorResponse({ message: req.t("errors.internalServer") }),
+        )
       return
     }
   },
@@ -3022,7 +3140,11 @@ contractorsRouter.post(
     if (!invites.length) {
       res
         .status(400)
-        .json(createErrorResponse({ message: "Invalid contractor" }))
+        .json(
+          createErrorResponse({
+            message: req.t("contractors.invalidContractor"),
+          }),
+        )
       return
     }
 
@@ -3031,7 +3153,7 @@ contractorsRouter.post(
       contractor.contractor_id,
     )
 
-    res.json({ result: "Success" })
+    res.json({ result: req.t("success.generic") })
   },
 )
 
@@ -3060,12 +3182,14 @@ contractorsRouter.post(
 
       await authorizeContractor(spectrum_id, user.user_id, true)
 
-      res.json(createResponse({ result: "Success" }))
+      res.json(createResponse({ result: req.t("success.generic") }))
     } catch (e) {
       console.error(e)
       res
         .status(500)
-        .json(createErrorResponse({ message: "Internal server error" }))
+        .json(
+          createErrorResponse({ message: req.t("errors.internalServer") }),
+        )
       return
     }
   },
@@ -3193,7 +3317,7 @@ contractorsRouter.post(
         discord_thread_channel_id: "1072580369251041330",
       },
     )
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -3257,11 +3381,11 @@ contractorsRouter.post(
       user_id: user.user_id,
     })
     if (roles.length) {
-      res.status(400).json(
-        createErrorResponse({
-          message: "You cannot leave a contractor you own",
-        }),
-      )
+    res.status(400).json(
+      createErrorResponse({
+        message: req.t("contractors.cannotLeaveOwned"),
+      }),
+    )
       return
     }
 
@@ -3285,6 +3409,6 @@ contractorsRouter.post(
       )
       .delete()
 
-    res.json(createResponse({ result: "Success" }))
+    res.json(createResponse({ result: req.t("success.generic") }))
   },
 )
