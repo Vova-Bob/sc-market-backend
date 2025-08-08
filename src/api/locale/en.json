@@ -19,5 +19,10 @@
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No"
+  },
+  "notifications": {
+    "invalidFormatting": "Invalid formatting",
+    "invalidNotification": "Invalid notification",
+    "success": "Success"
   }
-} 
+}

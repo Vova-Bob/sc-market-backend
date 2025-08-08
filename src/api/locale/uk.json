@@ -19,5 +19,10 @@
     "confirm": "Підтвердити",
     "yes": "Так",
     "no": "Ні"
+  },
+  "notifications": {
+    "invalidFormatting": "Некоректне форматування",
+    "invalidNotification": "Некоректне сповіщення",
+    "success": "Успіх"
   }
-} 
+}
