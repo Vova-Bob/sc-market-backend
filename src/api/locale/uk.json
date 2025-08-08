@@ -37,6 +37,10 @@
   "auth": {
     "unauthenticated": "Не авторизовано"
   },
+  "contracts": {
+    "invalidContractor": "Некоректний підрядник",
+    "invalidPublicContract": "Некоректний публічний контракт"
+  },
   "contractors": {
     "invalidInvite": "Некоректне запрошення",
     "alreadyMember": "Вже учасник",
