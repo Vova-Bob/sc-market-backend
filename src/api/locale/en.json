@@ -37,6 +37,10 @@
   "auth": {
     "unauthenticated": "Unauthenticated"
   },
+  "contracts": {
+    "invalidContractor": "Invalid contractor",
+    "invalidPublicContract": "Invalid public contract"
+  },
   "contractors": {
     "invalidInvite": "Invalid invite",
     "alreadyMember": "Already member",

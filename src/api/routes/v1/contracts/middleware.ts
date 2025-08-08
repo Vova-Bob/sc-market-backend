@@ -16,9 +16,11 @@ export async function valid_public_contract(
     .first()
 
   if (!contract) {
-    res
-      .status(404)
-      .json(createErrorResponse({ message: "Invalid public contract" }))
+    res.status(404).json(
+      createErrorResponse({
+        message: req.t("contracts.invalidPublicContract"),
+      }),
+    )
     return
   }
 

@@ -282,9 +282,11 @@ contractsRouter.post(
           spectrum_id: req.body.contractor,
         })
       } catch {
-        res
-          .status(400)
-          .json(createErrorResponse({ message: "Invalid contractor" }))
+        res.status(400).json(
+          createErrorResponse({
+            message: req.t("contracts.invalidContractor"),
+          }),
+        )
         return
       }
       if (
@@ -294,12 +296,9 @@ contractsRouter.post(
           "manage_orders",
         ))
       ) {
-        res.status(403).json(
-          createErrorResponse({
-            message:
-              "You do not have permission to make offers on behalf of this contractor",
-          }),
-        )
+        res
+          .status(403)
+          .json(createErrorResponse({ message: req.t("errors.noPermissions") }))
         return
       }
     }
