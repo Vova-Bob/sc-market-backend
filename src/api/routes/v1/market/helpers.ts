@@ -61,6 +61,7 @@ export function sameSeller(listings: DBMarketListing[]) {
 }
 
 export async function verify_listings(
+  req: Request,
   res: Response,
   items: { listing_id: string; quantity: number }[],
   user: User,
@@ -77,27 +78,27 @@ export async function verify_listings(
     try {
       listing = await database.getMarketListingComplete(listing_id)
     } catch {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: req.t("market.invalidListing") })
       return
     }
 
     if (!listing) {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: req.t("market.invalidListing") })
       return
     }
 
     if (listing.listing.status !== "active") {
-      res.status(404).json({ error: "Invalid listing" })
+      res.status(404).json({ error: req.t("market.invalidListing") })
       return
     }
 
     if (listing.listing.quantity_available < quantity || quantity < 1) {
-      res.status(400).json({ error: "Invalid quantity" })
+      res.status(400).json({ error: req.t("market.invalidQuantity") })
       return
     }
 
     if (listing.listing.user_seller_id === user.user_id) {
-      res.status(400).json({ error: "You cannot buy your own item!" })
+      res.status(400).json({ error: req.t("market.buyOwnItem") })
       return
     }
 
@@ -105,7 +106,7 @@ export async function verify_listings(
   }
 
   if (!sameSeller(listings.map((u) => u.listing.listing))) {
-    res.status(400).json({ message: "All items must be from same seller" })
+    res.status(400).json({ message: req.t("market.itemsDifferentSellers") })
     return
   }
 
@@ -242,7 +243,8 @@ export async function get_org_listings(contractor: DBContractor) {
 }
 
 export async function handle_quantity_update(
-  res: any,
+  req: Request,
+  res: Response,
   user: User,
   listing: DBMarketListing,
   quantity_available: number,
@@ -276,23 +278,23 @@ export async function handle_quantity_update(
   }
 
   if (listing.status === "archived") {
-    res.status(400).json({ error: "Cannot update archived listing" })
+    res.status(400).json({ error: req.t("market.cannotUpdateArchived") })
     return
   }
 
   if (quantity_available === undefined) {
-    res.status(400).json({ error: "Missing required fields" })
+    res.status(400).json({ error: req.t("market.missingFields") })
     return
   }
 
   if (quantity_available < 0) {
-    res.status(400).json({ error: "Invalid quantity" })
+    res.status(400).json({ error: req.t("market.invalidQuantity") })
     return
   }
 
   await database.updateMarketListing(listing.listing_id, { quantity_available })
 
-  res.json({ result: "Success" })
+  res.json({ result: req.t("success.generic") })
 }
 
 export function formatListingSlug(title: string) {

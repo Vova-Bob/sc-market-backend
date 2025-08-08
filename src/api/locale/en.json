@@ -58,6 +58,14 @@
     "invalidService": "Invalid service",
     "invalidPhoto": "Invalid photo"
   },
+  "market": {
+    "invalidListing": "Invalid listing",
+    "invalidQuantity": "Invalid quantity",
+    "buyOwnItem": "You cannot buy your own item!",
+    "itemsDifferentSellers": "All items must be from same seller",
+    "cannotUpdateArchived": "Cannot update archived listing",
+    "missingFields": "Missing required fields"
+  },
   "success": {
     "generic": "Success"
   }
