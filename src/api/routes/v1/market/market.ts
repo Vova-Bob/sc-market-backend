@@ -277,7 +277,7 @@ marketRouter.post(
     try {
       listing = await database.getMarketListing({ listing_id })
     } catch {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: req.t("market.invalidListing") })
       return
     }
 
@@ -311,12 +311,12 @@ marketRouter.post(
     }
 
     if (listing.status === "archived") {
-      res.status(400).json({ error: "Cannot update archived listing" })
+      res.status(400).json({ error: req.t("market.cannotUpdateArchived") })
       return
     }
 
     if (listing.sale_type === "auction" && user.role !== "admin") {
-      res.status(400).json({ error: "Cannot update auction listings" })
+      res.status(400).json({ error: req.t("market.cannotUpdateAuction") })
       return
     }
 
@@ -351,19 +351,19 @@ marketRouter.post(
     ) {
       res
         .status(400)
-        .json({ error: "Can't update details for aggregate listing" })
+        .json({ error: req.t("market.cannotUpdateAggregate") })
       return
     }
 
     if (listing.sale_type === "auction" && price) {
-      res.status(400).json({ error: "Cannot edit price of auction" })
+      res.status(400).json({ error: req.t("market.cannotEditAuctionPrice") })
       return
     }
 
     if (minimum_bid_increment && listing.sale_type !== "auction") {
       res
         .status(400)
-        .json({ error: "Cannot set bid increment for non auction" })
+        .json({ error: req.t("market.cannotSetBidIncrement") })
       return
     }
 
@@ -374,7 +374,7 @@ marketRouter.post(
       } else {
         const item = await database.getGameItem({ name: item_name })
         if (!item) {
-          res.status(400).json({ error: "Invalid item name" })
+          res.status(400).json({ error: req.t("market.invalidItemName") })
           return
         }
         game_item_id = item.id
@@ -418,7 +418,7 @@ marketRouter.post(
             { resource_id: resource.resource_id },
           ])
         } catch (e: any) {
-          res.status(400).json({ error: "Invalid photo!" })
+          res.status(400).json({ error: req.t("market.invalidPhoto") })
           return
         }
       }
@@ -562,7 +562,7 @@ marketRouter.post(
     try {
       listing = await database.getMarketListing({ listing_id })
     } catch {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: req.t("market.invalidListing") })
       return
     }
 
@@ -666,7 +666,7 @@ marketRouter.post(
     try {
       listing = await database.getMarketListing({ listing_id })
     } catch {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: req.t("market.invalidListing") })
       return
     }
 
@@ -700,13 +700,13 @@ marketRouter.post(
     }
 
     if (listing.status === "archived") {
-      res.status(400).json({ error: "Cannot update archived listing" })
+      res.status(400).json({ error: req.t("market.cannotUpdateArchived") })
       return
     }
 
     const expiration = moment(listing.expiration)
     if (expiration > moment().add(1, "months").subtract(3, "days")) {
-      res.status(400).json({ error: "Too soon to refresh" })
+      res.status(400).json({ error: req.t("market.refreshTooSoon") })
       return
     } // If expiration is at least 1 month - 3 days in the future
 
@@ -1011,7 +1011,7 @@ marketRouter.get(
     try {
       listing = await database.getMarketListing({ listing_id: listing_id })
     } catch (e) {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: req.t("market.invalidListing") })
       return
     }
 
@@ -1143,7 +1143,7 @@ marketRouter.post(
       } = req.body
 
       if (!items || !items.length) {
-        res.status(400).json({ error: "Missing required fields" })
+        res.status(400).json({ error: req.t("market.missingFields") })
         return
       }
 
@@ -1200,7 +1200,7 @@ marketRouter.post(
       })
     } catch (e) {
       console.error(e)
-      res.status(400).json({ error: "Invalid formatting!" })
+      res.status(400).json({ error: req.t("market.invalidFormatting") })
     }
   },
 )
@@ -1322,7 +1322,7 @@ marketRouter.post(
     } = req.body
 
     if (!(listing_id || bid)) {
-      res.status(400).json({ error: "Missing required fields" })
+      res.status(400).json({ error: req.t("market.missingFields") })
       return
     }
 
@@ -1330,13 +1330,13 @@ marketRouter.post(
     try {
       listing = await database.getMarketListing({ listing_id })
     } catch {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: req.t("market.invalidListing") })
       return
     }
 
     let price = +listing.price
     if (listing.sale_type !== "auction") {
-      res.status(400).json({ error: "Invalid listing" })
+      res.status(400).json({ error: req.t("market.invalidListing") })
       return
     }
 
@@ -1349,22 +1349,22 @@ marketRouter.post(
 
     const details = await database.getAuctionDetail({ listing_id })
     if (!details) {
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
       return
     }
 
     if (new Date(details.end_time) < new Date()) {
-      res.status(500).json({ error: "Auction is over" })
+      res.status(500).json({ error: req.t("market.auctionOver") })
       return
     }
 
     if (bid < price + details.minimum_bid_increment) {
-      res.status(400).json({ error: "Invalid bid amount!" })
+      res.status(400).json({ error: req.t("market.invalidBidAmount") })
       return
     }
 
     if (listing.user_seller_id === user.user_id) {
-      res.status(400).json({ error: "You cannot buy your own item!" })
+      res.status(400).json({ error: req.t("market.buyOwnItem") })
       return
     }
 
@@ -1524,14 +1524,14 @@ marketRouter.post(
 
       // Validate urls are valid
       if (photos.find((p: string) => !cdn.verifyExternalResource(p))) {
-        res.status(400).json({ message: "Invalid photo!" })
+        res.status(400).json({ message: req.t("market.invalidPhoto") })
         return
       }
 
       // Validate auction end time
       if (sale_type === "auction") {
         if (new Date(end_time) < new Date()) {
-          res.status(400).json({ message: "Invalid end time" })
+          res.status(400).json({ message: req.t("market.invalidEndTime") })
           return
         }
       }
@@ -1541,7 +1541,7 @@ marketRouter.post(
       if (item_name) {
         const item = await database.getGameItem({ name: item_name })
         if (!item) {
-          res.status(400).json({ message: "Invalid item name" })
+          res.status(400).json({ message: req.t("market.invalidItemName") })
           return
         }
         game_item_id = item.id
@@ -1599,7 +1599,7 @@ marketRouter.post(
       res.json(listings[0])
     } catch (e) {
       console.error(e)
-      res.status(500).json({ message: "Internal server error" })
+      res.status(500).json({ message: req.t("errors.internalServer") })
       return
     }
   },
@@ -1746,7 +1746,7 @@ marketRouter.post(
       // Validate contractor exists and user has permissions
       const contractor = await database.getContractor({ spectrum_id })
       if (!contractor) {
-        res.status(400).json({ message: "Invalid contractor" })
+        res.status(400).json({ message: req.t("market.invalidContractor") })
         return
       }
 
@@ -1781,14 +1781,14 @@ marketRouter.post(
 
       // Validate photos are from CDN
       if (photos.find((p: string) => !cdn.verifyExternalResource(p))) {
-        res.status(400).json({ message: "Invalid photo!" })
+        res.status(400).json({ message: req.t("market.invalidPhoto") })
         return
       }
 
       // Validate auction end time
       if (sale_type === "auction") {
         if (new Date(end_time) < new Date()) {
-          res.status(400).json({ message: "Invalid end time" })
+          res.status(400).json({ message: req.t("market.invalidEndTime") })
           return
         }
       }
@@ -1798,7 +1798,7 @@ marketRouter.post(
       if (item_name) {
         const item = await database.getGameItem({ name: item_name })
         if (!item) {
-          res.status(400).json({ message: "Invalid item name" })
+          res.status(400).json({ message: req.t("market.invalidItemName") })
           return
         }
         game_item_id = item.id
@@ -1857,7 +1857,7 @@ marketRouter.post(
       res.json(listings[0])
     } catch (e) {
       console.error(e)
-      res.status(500).json({ message: "Internal server error" })
+      res.status(500).json({ message: req.t("errors.internalServer") })
       return
     }
   },
@@ -1908,7 +1908,7 @@ marketRouter.get(
       res.json(await get_my_listings(user))
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
       return
     }
   },
@@ -2087,7 +2087,7 @@ marketRouter.get(
     try {
       query = await convertQuery(req.query)
     } catch (e) {
-      res.status(400).json({ error: "Invalid query" })
+      res.status(400).json({ error: req.t("market.invalidQuery") })
       return
     }
 
@@ -2128,7 +2128,7 @@ marketRouter.get(
       })
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
     }
   },
 )
@@ -2195,7 +2195,7 @@ marketRouter.get(
       )
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
     }
   },
 )
@@ -2258,7 +2258,7 @@ marketRouter.get(
     const username = req.params["username"]
     const user = await database.getUser({ username: username })
     if (!user) {
-      res.status(400).json({ error: "Invalid user" })
+      res.status(400).json({ error: req.t("market.invalidUser") })
       return
     }
 
@@ -2373,7 +2373,7 @@ marketRouter.get(
       res.json(await get_org_listings(contractor))
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
     }
   },
 )
@@ -2489,7 +2489,7 @@ marketRouter.get(
       )
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" }) // Fixed status code from 400 to 500
+      res.status(500).json({ error: req.t("errors.internalServer") }) // Fixed status code from 400 to 500
     }
   },
 )
@@ -2596,7 +2596,7 @@ marketRouter.get(
       )
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
     }
   },
 )
@@ -2697,7 +2697,7 @@ marketRouter.get(
       res.json(await formatBuyOrderChartDetails(buy_orders))
     } catch (e) {
       console.error(e)
-      res.status(400).json({ error: "Invalid item" })
+      res.status(400).json({ error: req.t("market.invalidItem") })
       return
     }
   },
@@ -2710,7 +2710,7 @@ marketRouter.get("/aggregate/:game_item_id/history", async (req, res) => {
     res.json(await formatPriceHistory(price_history))
   } catch (e) {
     console.error(e)
-    res.status(400).json({ error: "Invalid item" })
+    res.status(400).json({ error: req.t("market.invalidItem") })
     return
   }
 })
@@ -2727,7 +2727,7 @@ marketRouter.post(
       })
 
       if (!game_item) {
-        res.status(400).json({ error: "Invalid item" })
+        res.status(400).json({ error: req.t("market.invalidItem") })
         return
       }
 
@@ -2754,7 +2754,7 @@ marketRouter.post(
             game_item_id.toString() + `_photo_${0}`,
           )
         } catch (e: any) {
-          res.status(400).json({ error: "Invalid photo!" })
+          res.status(400).json({ error: req.t("market.invalidPhoto") })
           return
         }
 
@@ -2775,7 +2775,7 @@ marketRouter.post(
       res.json({ result: "Success" })
     } catch (e) {
       console.error(e)
-      res.status(400).json({ error: "Invalid item" })
+      res.status(400).json({ error: req.t("market.invalidItem") })
       return
     }
   },
@@ -2790,14 +2790,14 @@ marketRouter.get("/aggregate/:game_item_id", async (req, res) => {
     })
 
     if (aggregate === null) {
-      res.status(400).json({ error: "Invalid item" })
+      res.status(400).json({ error: req.t("market.invalidItem") })
       return
     }
 
     res.json(await formatMarketAggregateComplete(aggregate))
   } catch (e) {
     console.error(e)
-    res.status(400).json({ error: "Invalid item" })
+    res.status(400).json({ error: req.t("market.invalidItem") })
     return
   }
 })
@@ -2809,7 +2809,7 @@ marketRouter.get("/multiple/:multiple_id", async (req, res) => {
     const multiple = await database.getMarketMultipleComplete(multiple_id, {})
 
     if (multiple === null) {
-      res.status(400).json({ error: "Invalid item" })
+      res.status(400).json({ error: req.t("market.invalidItem") })
       return
     }
 
@@ -2828,7 +2828,7 @@ marketRouter.get("/multiple/:multiple_id", async (req, res) => {
     res.json(await formatMarketMultipleComplete(multiple, show_private))
   } catch (e) {
     console.error(e)
-    res.status(400).json({ error: "Invalid item" })
+    res.status(400).json({ error: req.t("market.invalidItem") })
     return
   }
 })
@@ -2859,7 +2859,7 @@ marketRouter.post(
         !item_type ||
         !item_type.length
       ) {
-        res.status(400).json({ error: "Missing required field" })
+        res.status(400).json({ error: req.t("market.missingField") })
         return
       }
 
@@ -2878,7 +2878,7 @@ marketRouter.post(
           })
           listingObjects.push(listingObjectUnique)
           if (listingObject.sale_type !== "sale") {
-            res.status(400).json({ error: "Invalid listing sale type" })
+            res.status(400).json({ error: req.t("market.invalidSaleType") })
             return
           }
           if (
@@ -2886,11 +2886,11 @@ marketRouter.post(
           ) {
             res
               .status(400)
-              .json({ error: "Cannot add listing owned by another user" })
+              .json({ error: req.t("market.cannotAddListingOwnedByAnother") })
             return
           }
         } catch (e) {
-          res.status(400).json({ error: "Invalid listing" })
+          res.status(400).json({ error: req.t("market.invalidListing") })
           return
         }
       }
@@ -2937,7 +2937,7 @@ marketRouter.post(
       )
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
     }
   },
 )
@@ -2966,7 +2966,7 @@ marketRouter.post(
         !item_type ||
         !item_type.length
       ) {
-        res.status(400).json({ error: "Missing required field" })
+        res.status(400).json({ error: req.t("market.missingField") })
         return
       }
 
@@ -2985,7 +2985,7 @@ marketRouter.post(
           })
           listingObjects.push(listingObjectUnique)
           if (listingObject.sale_type !== "sale") {
-            res.status(400).json({ error: "Invalid listing sale type" })
+            res.status(400).json({ error: req.t("market.invalidSaleType") })
             return
           }
           if (
@@ -2994,12 +2994,12 @@ marketRouter.post(
           ) {
             res
               .status(400)
-              .json({ error: "Cannot add listing owned by another user" })
+              .json({ error: req.t("market.cannotAddListingOwnedByAnother") })
             return
           }
         } catch (e) {
           console.error(e)
-          res.status(400).json({ error: "Invalid listing" })
+          res.status(400).json({ error: req.t("market.invalidListing") })
           return
         }
       }
@@ -3039,7 +3039,7 @@ marketRouter.post(
       return
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
       return
     }
   },
@@ -3071,12 +3071,16 @@ marketRouter.post(
             "manage_market",
           ))
         ) {
-          res.status(403).json({ error: "Missing required permissions" })
+          res
+            .status(403)
+            .json({ error: req.t("errors.missingPermissions") })
           return
         }
       } else {
         if (multiple.user_seller_id !== user.user_id) {
-          res.status(403).json({ error: "Missing required permissions" })
+          res
+            .status(403)
+            .json({ error: req.t("errors.missingPermissions") })
           return
         }
       }
@@ -3086,7 +3090,7 @@ marketRouter.post(
         (description && !description.length) ||
         (item_type && !item_type.length)
       ) {
-        res.status(400).json({ error: "Missing required field" })
+        res.status(400).json({ error: req.t("market.missingField") })
         return
       }
 
@@ -3122,7 +3126,7 @@ marketRouter.post(
           }
 
           if (!["sale", "multiple"].includes(listingObject.sale_type)) {
-            res.status(400).json({ error: "Invalid listing sale type" })
+            res.status(400).json({ error: req.t("market.invalidSaleType") })
             return
           }
           if (listingObject.contractor_seller_id) {
@@ -3132,7 +3136,7 @@ marketRouter.post(
             ) {
               res
                 .status(400)
-                .json({ error: "Cannot add listing owned by another user" })
+                .json({ error: req.t("market.cannotAddListingOwnedByAnother") })
               return
             }
           }
@@ -3140,12 +3144,12 @@ marketRouter.post(
           if (listingObject.user_seller_id !== multiple.user_seller_id) {
             res
               .status(400)
-              .json({ error: "Cannot add listing owned by another user" })
+              .json({ error: req.t("market.cannotAddListingOwnedByAnother") })
             return
           }
         } catch (e) {
           console.error(e)
-          res.status(400).json({ error: "Invalid listing" })
+          res.status(400).json({ error: req.t("market.invalidListing") })
           return
         }
       }
@@ -3220,7 +3224,7 @@ marketRouter.post(
       return
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
       return
     }
   },
@@ -3245,22 +3249,22 @@ marketRouter.post(
       })
 
       if (!aggregate) {
-        res.status(400).json({ error: "Invalid listing" })
+        res.status(400).json({ error: req.t("market.invalidListing") })
         return
       }
 
       if (quantity < 1) {
-        res.status(400).json({ error: "Invalid quantity" })
+        res.status(400).json({ error: req.t("market.invalidQuantity") })
         return
       }
 
       if (price < 1) {
-        res.status(400).json({ error: "Invalid price" })
+        res.status(400).json({ error: req.t("market.invalidPrice") })
         return
       }
 
       if (new Date(expiry) < new Date()) {
-        res.status(400).json({ error: "Invalid expiry" })
+        res.status(400).json({ error: req.t("market.invalidExpiry") })
         return
       }
 
@@ -3276,7 +3280,7 @@ marketRouter.post(
       return
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
       return
     }
   },
@@ -3306,7 +3310,7 @@ marketRouter.post(
             "manage_orders",
           ))
         ) {
-          res.status(400).json({ error: "No permissions" })
+          res.status(400).json({ error: req.t("errors.noPermissions") })
           return
         }
       }
@@ -3317,12 +3321,12 @@ marketRouter.post(
         buy_order.fulfilled_timestamp ||
         buy_order.expiry < new Date()
       ) {
-        res.status(400).json({ error: "Invalid buy order" })
+        res.status(400).json({ error: req.t("market.invalidBuyOrder") })
         return
       }
 
       if (buy_order.buyer_id === user.user_id) {
-        res.status(400).json({ error: "Can't fulfill own order" })
+        res.status(400).json({ error: req.t("market.cannotFulfillOwnOrder") })
         return
       }
 
@@ -3369,7 +3373,7 @@ marketRouter.post(
       return
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
       return
     }
   },
@@ -3389,12 +3393,12 @@ marketRouter.post(
         buy_order.fulfilled_timestamp ||
         buy_order.expiry < new Date()
       ) {
-        res.status(400).json({ error: "Invalid buy order" })
+        res.status(400).json({ error: req.t("market.invalidBuyOrder") })
         return
       }
 
       if (buy_order.buyer_id !== user.user_id) {
-        res.status(400).json({ error: "No permissions" })
+        res.status(400).json({ error: req.t("errors.noPermissions") })
         return
       }
 
@@ -3409,7 +3413,7 @@ marketRouter.post(
       return
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
       return
     }
   },
@@ -3536,14 +3540,14 @@ marketRouter.get(
       const item_name = req.params["name"]
 
       if (!item_name) {
-        res.status(400).json({ error: "Item name is required" })
+        res.status(400).json({ error: req.t("market.itemNameRequired") })
         return
       }
 
       const game_item = await database.getGameItem({ name: item_name })
 
       if (!game_item) {
-        res.status(400).json({ error: "Game item not found" })
+        res.status(400).json({ error: req.t("market.gameItemNotFound") })
         return
       }
 
@@ -3566,7 +3570,7 @@ marketRouter.get(
       })
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: req.t("errors.internalServer") })
     }
   },
 )

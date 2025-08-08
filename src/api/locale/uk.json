@@ -28,7 +28,8 @@
   "errors": {
     "missingPermissions": "Недостатньо прав",
     "noPermissions": "Немає прав",
-    "notAuthorized": "Ви не авторизовані"
+    "notAuthorized": "Ви не авторизовані",
+    "internalServer": "Внутрішня помилка сервера"
   },
   "auth": {
     "unauthenticated": "Не авторизовано"
@@ -64,7 +65,31 @@
     "buyOwnItem": "Ви не можете купити власний товар!",
     "itemsDifferentSellers": "Усі товари повинні бути від одного продавця",
     "cannotUpdateArchived": "Неможливо оновити архівоване оголошення",
-    "missingFields": "Відсутні необхідні поля"
+    "missingFields": "Відсутні необхідні поля",
+    "cannotUpdateAuction": "Неможливо оновити аукціонні оголошення",
+    "cannotEditAuctionPrice": "Неможливо змінити ціну аукціону",
+    "cannotUpdateAggregate": "Неможливо оновити деталі агрегованого оголошення",
+    "cannotSetBidIncrement": "Неможливо встановити крок ставки для неаукціону",
+    "invalidItemName": "Некоректна назва товару",
+    "invalidPhoto": "Некоректне фото",
+    "refreshTooSoon": "Занадто рано оновлювати",
+    "invalidFormatting": "Некоректне форматування",
+    "auctionOver": "Аукціон завершено",
+    "invalidBidAmount": "Некоректна сума ставки",
+    "invalidEndTime": "Некоректний час завершення",
+    "invalidContractor": "Некоректний підрядник",
+    "invalidUser": "Некоректний користувач",
+    "invalidQuery": "Некоректний запит",
+    "invalidItem": "Некоректний товар",
+    "missingField": "Відсутнє необхідне поле",
+    "invalidSaleType": "Некоректний тип продажу оголошення",
+    "cannotAddListingOwnedByAnother": "Неможливо додати оголошення іншого користувача",
+    "invalidPrice": "Некоректна ціна",
+    "invalidExpiry": "Некоректний термін дії",
+    "cannotFulfillOwnOrder": "Неможливо виконати власне замовлення",
+    "invalidBuyOrder": "Некоректне замовлення на купівлю",
+    "itemNameRequired": "Потрібна назва товару",
+    "gameItemNotFound": "Ігровий предмет не знайдено"
   },
   "success": {
     "generic": "Успіх"

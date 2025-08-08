@@ -28,7 +28,8 @@
   "errors": {
     "missingPermissions": "Missing permissions",
     "noPermissions": "No permissions",
-    "notAuthorized": "You are not authorized"
+    "notAuthorized": "You are not authorized",
+    "internalServer": "Internal server error"
   },
   "auth": {
     "unauthenticated": "Unauthenticated"
@@ -64,7 +65,31 @@
     "buyOwnItem": "You cannot buy your own item!",
     "itemsDifferentSellers": "All items must be from same seller",
     "cannotUpdateArchived": "Cannot update archived listing",
-    "missingFields": "Missing required fields"
+    "missingFields": "Missing required fields",
+    "cannotUpdateAuction": "Cannot update auction listings",
+    "cannotEditAuctionPrice": "Cannot edit price of auction",
+    "cannotUpdateAggregate": "Can't update details for aggregate listing",
+    "cannotSetBidIncrement": "Cannot set bid increment for non auction",
+    "invalidItemName": "Invalid item name",
+    "invalidPhoto": "Invalid photo",
+    "refreshTooSoon": "Too soon to refresh",
+    "invalidFormatting": "Invalid formatting",
+    "auctionOver": "Auction is over",
+    "invalidBidAmount": "Invalid bid amount",
+    "invalidEndTime": "Invalid end time",
+    "invalidContractor": "Invalid contractor",
+    "invalidUser": "Invalid user",
+    "invalidQuery": "Invalid query",
+    "invalidItem": "Invalid item",
+    "missingField": "Missing required field",
+    "invalidSaleType": "Invalid listing sale type",
+    "cannotAddListingOwnedByAnother": "Cannot add listing owned by another user",
+    "invalidPrice": "Invalid price",
+    "invalidExpiry": "Invalid expiry",
+    "cannotFulfillOwnOrder": "Can't fulfill own order",
+    "invalidBuyOrder": "Invalid buy order",
+    "itemNameRequired": "Item name is required",
+    "gameItemNotFound": "Game item not found"
   },
   "success": {
     "generic": "Success"
