@@ -566,7 +566,7 @@ marketRouter.post(
       return
     }
 
-    await handle_quantity_update(res, user, listing, quantity_available)
+    await handle_quantity_update(req, res, user, listing, quantity_available)
   },
 )
 
@@ -1147,7 +1147,7 @@ marketRouter.post(
         return
       }
 
-      const listings = await verify_listings(res, items, user)
+      const listings = await verify_listings(req, res, items, user)
       if (listings === undefined) {
         return
       }

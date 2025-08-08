@@ -58,6 +58,14 @@
     "invalidService": "Некоректна послуга",
     "invalidPhoto": "Некоректне фото"
   },
+  "market": {
+    "invalidListing": "Некоректне оголошення",
+    "invalidQuantity": "Некоректна кількість",
+    "buyOwnItem": "Ви не можете купити власний товар!",
+    "itemsDifferentSellers": "Усі товари повинні бути від одного продавця",
+    "cannotUpdateArchived": "Неможливо оновити архівоване оголошення",
+    "missingFields": "Відсутні необхідні поля"
+  },
   "success": {
     "generic": "Успіх"
   }

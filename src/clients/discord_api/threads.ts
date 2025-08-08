@@ -155,7 +155,7 @@ threadRouter.post("/market/quantity/:opt", async (req, res) => {
     }
   }
 
-  await handle_quantity_update(res, user, listing, new_quantity)
+  await handle_quantity_update(req, res, user, listing, new_quantity)
 })
 
 threadRouter.get("/user/:discord_id/assigned", async (req, res) => {
