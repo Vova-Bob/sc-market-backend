@@ -27,7 +27,8 @@
   },
   "errors": {
     "missingPermissions": "Missing permissions",
-    "noPermissions": "No permissions"
+    "noPermissions": "No permissions",
+    "notAuthorized": "You are not authorized"
   },
   "auth": {
     "unauthenticated": "Unauthenticated"
@@ -42,6 +43,14 @@
   "comments": {
     "invalid": "Invalid comment",
     "invalidArgument": "Invalid argument"
+  },
+  "transactions": {
+    "invalid": "Invalid transaction",
+    "missingFields": "Missing required fields",
+    "invalidAmount": "Invalid transaction amount",
+    "selfTransfer": "Cannot send money to yourself",
+    "insufficientFunds": "Insufficient funds",
+    "invalidContractor": "Invalid contractor"
   },
   "services": {
     "invalidContractor": "Invalid contractor",

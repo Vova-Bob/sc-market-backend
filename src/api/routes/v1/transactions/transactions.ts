@@ -22,7 +22,7 @@ transactionRouter.get(
         transaction_id: transaction_id,
       })
     } catch (e) {
-      res.status(400).json({ error: "Invalid transaction" })
+      res.status(400).json({ error: req.t("transactions.invalid") })
       return
     }
     const user = req.user as User
@@ -34,7 +34,7 @@ transactionRouter.get(
     if (!related) {
       res
         .status(403)
-        .json({ error: "You are not authorized to view this transaction" })
+        .json({ error: req.t("errors.notAuthorized") })
       return
     }
 
@@ -108,19 +108,19 @@ transactionRouter.post("/create", userAuthorized, async (req, res, next) => {
   } = req.body
 
   if (!amount || (!contractor_recipient_id && !user_recipient_id)) {
-    res.status(400).json({ error: "Missing required fields" })
+    res.status(400).json({ error: req.t("transactions.missingFields") })
     return
   }
 
   if (contractor_recipient_id && user_recipient_id) {
     res.status(400).json({
-      error: "Must provide either contractor_recipient_id or user_recipient_id",
+      error: req.t("transactions.missingFields"),
     })
     return
   }
 
   if (amount < 1) {
-    res.status(400).json({ error: "Invalid transaction amount" })
+    res.status(400).json({ error: req.t("transactions.invalidAmount") })
     return
   }
 
@@ -131,7 +131,7 @@ transactionRouter.post("/create", userAuthorized, async (req, res, next) => {
         spectrum_id: contractor_recipient_id,
       })
     } catch {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("transactions.invalidContractor") })
       return
     }
   }
@@ -141,18 +141,18 @@ transactionRouter.post("/create", userAuthorized, async (req, res, next) => {
     try {
       target_user = await database.getUser({ username: user_recipient_id })
     } catch {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("transactions.invalidContractor") })
       return
     }
   }
 
   if (target_user?.user_id === user.user_id) {
-    res.status(400).json({ error: "Cannot send money to yourself" })
+    res.status(400).json({ error: req.t("transactions.selfTransfer") })
     return
   }
 
   if (+user!.balance! < amount) {
-    res.status(400).json({ error: "Insufficient funds" })
+    res.status(400).json({ error: req.t("transactions.insufficientFunds") })
     return
   }
   await database.decrementUserBalance(user.user_id, amount)
@@ -178,7 +178,7 @@ transactionRouter.post("/create", userAuthorized, async (req, res, next) => {
     user_recipient_id: target_user && target_user.user_id,
   })
 
-  res.json({ result: "Success" })
+  res.json({ result: req.t("success.generic") })
 })
 
 transactionRouter.post(
@@ -192,7 +192,7 @@ transactionRouter.post(
       spectrum_id: spectrum_id,
     })
     if (!contractor) {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("transactions.invalidContractor") })
       return
     }
 
@@ -203,10 +203,9 @@ transactionRouter.post(
         "manage_market",
       )
     ) {
-      res.status(403).json({
-        error:
-          "You are not authorized to create transactions on behalf of this contractor!",
-      })
+      res
+        .status(403)
+        .json({ error: req.t("errors.notAuthorized") })
       return
     }
 
@@ -221,20 +220,19 @@ transactionRouter.post(
     } = req.body
 
     if (!amount || (!contractor_recipient_id && !user_recipient_id)) {
-      res.status(400).json({ error: "Missing required fields" })
+      res.status(400).json({ error: req.t("transactions.missingFields") })
       return
     }
 
     if (contractor_recipient_id && user_recipient_id) {
       res.status(400).json({
-        error:
-          "Must provide either contractor_recipient_id or user_recipient_id",
+        error: req.t("transactions.missingFields"),
       })
       return
     }
 
     if (amount < 1) {
-      res.status(400).json({ error: "Invalid transaction amount" })
+      res.status(400).json({ error: req.t("transactions.invalidAmount") })
       return
     }
 
@@ -245,13 +243,13 @@ transactionRouter.post(
           spectrum_id: contractor_recipient_id,
         })
       } catch {
-        res.status(400).json({ error: "Invalid contractor" })
+        res.status(400).json({ error: req.t("transactions.invalidContractor") })
         return
       }
     }
 
     if (target_contractor?.contractor_id === contractor.contractor_id) {
-      res.status(400).json({ error: "Cannot send money to yourself" })
+      res.status(400).json({ error: req.t("transactions.selfTransfer") })
       return
     }
 
@@ -260,13 +258,13 @@ transactionRouter.post(
       try {
         target_user = await database.getUser({ username: user_recipient_id })
       } catch {
-        res.status(400).json({ error: "Invalid contractor" })
+        res.status(400).json({ error: req.t("transactions.invalidContractor") })
         return
       }
     }
 
     if (+contractor.balance < amount) {
-      res.status(400).json({ error: "Insufficient funds" })
+      res.status(400).json({ error: req.t("transactions.insufficientFunds") })
       return
     }
 
@@ -292,7 +290,7 @@ transactionRouter.post(
       user_recipient_id: target_user && target_user.user_id,
     })
     // TODO: Make the above an atomic function in PSQL, so that the same dollar isn't spent twice
-    res.json({ result: "Success" })
+    res.json({ result: req.t("success.generic") })
   },
 )
 
@@ -346,7 +344,7 @@ transactionsRouter.get(
       spectrum_id: spectrum_id,
     })
     if (!contractor) {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("transactions.invalidContractor") })
       return
     }
 
@@ -361,7 +359,7 @@ transactionsRouter.get(
     ) {
       res
         .status(403)
-        .json({ error: "You are not authorized to view these transactions" })
+        .json({ error: req.t("errors.notAuthorized") })
       return
     }
 
