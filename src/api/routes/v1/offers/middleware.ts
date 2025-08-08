@@ -17,7 +17,9 @@ export async function related_to_offer(
   try {
     ;[offer] = await database.getOfferSessions({ id: id })
   } catch (e) {
-    res.status(404).json(createErrorResponse({ error: "Invalid offer" }))
+    res
+      .status(404)
+      .json(createErrorResponse({ error: req.t("offers.invalidOffer") }))
     return
   }
 
@@ -37,11 +39,11 @@ export async function related_to_offer(
   }
 
   if (unrelated) {
-    res.status(403).json(
-      createErrorResponse({
-        error: "You are not authorized to view this offer",
-      }),
-    )
+    res
+      .status(403)
+      .json(
+        createErrorResponse({ error: req.t("errors.notAuthorized") }),
+      )
     return
   }
 
@@ -68,11 +70,11 @@ export async function can_respond_to_offer(
   }
 
   if (!related) {
-    res.status(403).json(
-      createErrorResponse({
-        error: "You are not authorized to respond to this offer",
-      }),
-    )
+    res
+      .status(403)
+      .json(
+        createErrorResponse({ error: req.t("errors.notAuthorized") }),
+      )
   }
 
   next()
