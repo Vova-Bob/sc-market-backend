@@ -29,7 +29,8 @@
     "missingPermissions": "Недостатньо прав",
     "noPermissions": "Немає прав",
     "notAuthorized": "Ви не авторизовані",
-    "internalServer": "Внутрішня помилка сервера"
+    "internalServer": "Внутрішня помилка сервера",
+    "unknown": "Сталася невідома помилка"
   },
   "auth": {
     "unauthenticated": "Не авторизовано"
@@ -105,5 +106,23 @@
   },
   "success": {
     "generic": "Успіх"
+  },
+  "orders": {
+    "invalidStatus": "Некоректний статус",
+    "closedStatusChange": "Неможливо змінити статус закритого замовлення",
+    "statusAssignedOnly": "Лише призначений користувач може змінити статус цього замовлення на {{status}}",
+    "notAssignable": "Це замовлення не можна призначити",
+    "invalidUser": "Некоректний користувач",
+    "invalidContractor": "Некоректний підрядник",
+    "invalidTarget": "Некоректна ціль",
+    "targetNotApplied": "Ціль не подавала заявку на це замовлення",
+    "alreadyAssigned": "Замовлення вже призначено",
+    "alreadyApplied": "Ви вже подали заявку на це замовлення",
+    "invalidOrder": "Некоректне замовлення",
+    "invalidRole": "Некоректна роль",
+    "emptyMessage": "Вміст повідомлення не може бути порожнім",
+    "invalidRating": "Некоректний рейтинг",
+    "reviewExists": "Відгук на це замовлення вже залишено",
+    "threadExists": "Замовлення вже має тему"
   }
 }

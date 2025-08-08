@@ -29,7 +29,8 @@
     "missingPermissions": "Missing permissions",
     "noPermissions": "No permissions",
     "notAuthorized": "You are not authorized",
-    "internalServer": "Internal server error"
+    "internalServer": "Internal server error",
+    "unknown": "An unknown error occurred"
   },
   "auth": {
     "unauthenticated": "Unauthenticated"
@@ -105,5 +106,23 @@
   },
   "success": {
     "generic": "Success"
+  },
+  "orders": {
+    "invalidStatus": "Invalid status",
+    "closedStatusChange": "Cannot change status for closed order",
+    "statusAssignedOnly": "Only the assigned user may set the status of this order to {{status}}",
+    "notAssignable": "This order cannot be assigned",
+    "invalidUser": "Invalid user",
+    "invalidContractor": "Invalid contractor",
+    "invalidTarget": "Invalid target",
+    "targetNotApplied": "The target has not applied to this order",
+    "alreadyAssigned": "Order is already assigned",
+    "alreadyApplied": "You have already applied to this order",
+    "invalidOrder": "Invalid order",
+    "invalidRole": "Invalid role",
+    "emptyMessage": "Message content cannot be empty",
+    "invalidRating": "Invalid rating",
+    "reviewExists": "A review has already been left on this order",
+    "threadExists": "Order already has a thread"
   }
 }
