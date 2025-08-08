@@ -24,5 +24,21 @@
     "invalidFormatting": "Invalid formatting",
     "invalidNotification": "Invalid notification",
     "success": "Success"
+  },
+  "errors": {
+    "missingPermissions": "Missing permissions"
+  },
+  "auth": {
+    "unauthenticated": "Unauthenticated"
+  },
+  "recruiting": {
+    "invalidContractor": "Invalid contractor",
+    "missingFields": "Missing required fields",
+    "duplicatePost": "Cannot create multiple posts",
+    "invalidPost": "Invalid post",
+    "invalidComment": "Invalid comment"
+  },
+  "success": {
+    "generic": "Success!"
   }
 }
