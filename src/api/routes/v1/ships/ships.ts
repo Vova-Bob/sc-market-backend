@@ -37,14 +37,14 @@ shipRouter.post("/import", userAuthorized, async (req, res) => {
 
   if (!ships) {
     res.status(400).json({
-      error: "No ships provided",
+      error: req.t("ships.noneProvided"),
     })
     return
   }
 
   if (!validate(ships, ShipsFileSchema).valid) {
     res.status(400).json({
-      error: "Invalid ships provided",
+      error: req.t("ships.invalidProvided"),
     })
     return
   }
@@ -59,7 +59,7 @@ shipRouter.post("/import", userAuthorized, async (req, res) => {
     }),
   )
 
-  res.status(200).json({ result: "Success!" })
+  res.status(200).json({ result: req.t("success.generic") })
   return
 })
 
