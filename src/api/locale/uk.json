@@ -30,10 +30,24 @@
     "noPermissions": "Немає прав",
     "notAuthorized": "Ви не авторизовані",
     "internalServer": "Внутрішня помилка сервера",
+    "unauthorized": "Немає доступу",
+    "invalidUrl": "Некоректний URL",
     "unknown": "Сталася невідома помилка"
   },
   "auth": {
     "unauthenticated": "Не авторизовано"
+  },
+  "contractors": {
+    "invalidInvite": "Некоректне запрошення",
+    "alreadyMember": "Вже учасник",
+    "invalidRole": "Некоректна роль",
+    "roleCannotBeRemoved": "Цю роль не можна видалити.",
+    "invalidUser": "Некоректний користувач",
+    "invalidArguments": "Некоректні аргументи",
+    "invalidActions": "Некоректні дії",
+    "cannotLeaveOwned": "Ви не можете залишити підрядника, яким володієте",
+    "invalidContractor": "Некоректний підрядник",
+    "notFound": "Підрядника не знайдено"
   },
   "recruiting": {
     "invalidContractor": "Некоректний підрядник",

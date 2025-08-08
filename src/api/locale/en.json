@@ -30,10 +30,24 @@
     "noPermissions": "No permissions",
     "notAuthorized": "You are not authorized",
     "internalServer": "Internal server error",
+    "unauthorized": "Unauthorized",
+    "invalidUrl": "Invalid URL",
     "unknown": "An unknown error occurred"
   },
   "auth": {
     "unauthenticated": "Unauthenticated"
+  },
+  "contractors": {
+    "invalidInvite": "Invalid invite",
+    "alreadyMember": "Already member",
+    "invalidRole": "Invalid role",
+    "roleCannotBeRemoved": "This role cannot be removed.",
+    "invalidUser": "Invalid user",
+    "invalidArguments": "Invalid arguments",
+    "invalidActions": "Invalid actions",
+    "cannotLeaveOwned": "You cannot leave a contractor you own",
+    "invalidContractor": "Invalid contractor",
+    "notFound": "Contractor not found"
   },
   "recruiting": {
     "invalidContractor": "Invalid contractor",
