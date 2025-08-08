@@ -27,7 +27,8 @@
   },
   "errors": {
     "missingPermissions": "Недостатньо прав",
-    "noPermissions": "Немає прав"
+    "noPermissions": "Немає прав",
+    "notAuthorized": "Ви не авторизовані"
   },
   "auth": {
     "unauthenticated": "Не авторизовано"
@@ -42,6 +43,14 @@
   "comments": {
     "invalid": "Некоректний коментар",
     "invalidArgument": "Некоректний аргумент"
+  },
+  "transactions": {
+    "invalid": "Некоректна транзакція",
+    "missingFields": "Відсутні необхідні поля",
+    "invalidAmount": "Некоректна сума транзакції",
+    "selfTransfer": "Неможливо надіслати гроші самому собі",
+    "insufficientFunds": "Недостатньо коштів",
+    "invalidContractor": "Некоректний підрядник"
   },
   "services": {
     "invalidContractor": "Некоректний підрядник",
