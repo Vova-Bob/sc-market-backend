@@ -24,5 +24,21 @@
     "invalidFormatting": "Некоректне форматування",
     "invalidNotification": "Некоректне сповіщення",
     "success": "Успіх"
+  },
+  "errors": {
+    "missingPermissions": "Недостатньо прав"
+  },
+  "auth": {
+    "unauthenticated": "Не авторизовано"
+  },
+  "recruiting": {
+    "invalidContractor": "Некоректний підрядник",
+    "missingFields": "Відсутні необхідні поля",
+    "duplicatePost": "Неможливо створити кілька постів",
+    "invalidPost": "Некоректний пост",
+    "invalidComment": "Некоректний коментар"
+  },
+  "success": {
+    "generic": "Успіх!"
   }
 }

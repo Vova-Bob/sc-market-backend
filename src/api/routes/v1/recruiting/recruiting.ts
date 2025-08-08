@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from "express"
+import express, { NextFunction, Response } from "express"
 import { database } from "../../../../clients/database/knex-db.js"
 import {
   formatComment,
@@ -9,9 +9,10 @@ import { DBRecruitingPost } from "../../../../clients/database/db-models.js"
 import { User } from "../api-models.js"
 import { verifiedUser } from "../../../middleware/auth.js"
 import { has_permission } from "../util/permissions.js"
+import { RequestWithI18n } from "../util/i18n.js"
 
 export async function contractorRecruiting(
-  req: Request,
+  req: RequestWithI18n,
   res: Response,
   next: NextFunction,
 ) {
@@ -28,7 +29,7 @@ export async function contractorRecruiting(
     try {
       contractor = await database.getContractor({ spectrum_id })
     } catch (e) {
-      res.status(400).json({ error: "Invalid contractor" })
+      res.status(400).json({ error: req.t("recruiting.invalidContractor") })
       return
     }
 
@@ -38,13 +39,13 @@ export async function contractorRecruiting(
       "manage_recruiting",
     )
     if (!success) {
-      res.status(400).json({ error: "Missing permissions" })
+      res.status(400).json({ error: req.t("errors.missingPermissions") })
       return
     }
 
     next()
   } else {
-    res.status(401).json({ error: "Unauthenticated" })
+    res.status(401).json({ error: req.t("auth.unauthenticated") })
   }
 }
 
@@ -153,7 +154,7 @@ recruitingRouter.post(
     } = req.body
 
     if (!title || !body || !spectrum_id) {
-      res.status(400).json({ error: "Missing required fields" })
+      res.status(400).json({ error: req.t("recruiting.missingFields") })
       return
     }
 
@@ -164,7 +165,7 @@ recruitingRouter.post(
       contractor_id: contractor_obj.contractor_id,
     })
     if (last_post) {
-      res.status(400).json({ error: "Cannot create multiple posts" })
+      res.status(400).json({ error: req.t("recruiting.duplicatePost") })
       return
     }
 
@@ -184,7 +185,7 @@ recruitingRouter.get("/post/:post_id", async function (req, res) {
   const post = await database.getRecruitingPost({ post_id })
 
   if (!post) {
-    res.status(400).json({ message: "Invalid post" })
+    res.status(400).json({ message: req.t("recruiting.invalidPost") })
     return
   }
 
@@ -198,7 +199,7 @@ recruitingRouter.get("/post/:post_id/comments", async function (req, res) {
   const post = await database.getRecruitingPost({ post_id })
 
   if (!post) {
-    res.status(400).json({ message: "Invalid post" })
+    res.status(400).json({ message: req.t("recruiting.invalidPost") })
     return
   }
 
@@ -221,7 +222,7 @@ recruitingRouter.post("/post/:post_id/update", async function (req, res) {
   const post = await database.getRecruitingPost({ post_id })
 
   if (!post) {
-    res.status(400).json({ message: "Invalid post" })
+    res.status(400).json({ message: req.t("recruiting.invalidPost") })
     return
   }
 
@@ -235,7 +236,7 @@ recruitingRouter.post("/post/:post_id/update", async function (req, res) {
       "manage_recruiting",
     ))
   ) {
-    res.status(400).json({ message: "Missing permissions" })
+    res.status(400).json({ message: req.t("errors.missingPermissions") })
     return
   }
 
@@ -248,7 +249,7 @@ recruitingRouter.post("/post/:post_id/update", async function (req, res) {
   } = req.body
 
   if (!title && !body) {
-    res.status(400).json({ error: "Missing required fields" })
+    res.status(400).json({ error: req.t("recruiting.missingFields") })
     return
   }
 
@@ -270,7 +271,7 @@ recruitingRouter.post(
     const user = req.user as User
 
     if (!post) {
-      res.status(400).json({ message: "Invalid post" })
+      res.status(400).json({ message: req.t("recruiting.invalidPost") })
       return
     }
 
@@ -286,7 +287,7 @@ recruitingRouter.post(
       })
     }
 
-    res.json({ message: "Success!", already_voted: !!vote })
+    res.json({ message: req.t("success.generic"), already_voted: !!vote })
   },
 )
 
@@ -299,7 +300,7 @@ recruitingRouter.post(
     const user = req.user as User
 
     if (!post) {
-      res.status(400).json({ message: "Invalid post" })
+      res.status(400).json({ message: req.t("recruiting.invalidPost") })
       return
     }
 
@@ -316,7 +317,7 @@ recruitingRouter.post(
       const comment = await database.getComment({ comment_id: reply_to })
 
       if (!comment) {
-        res.status(400).json({ message: "Invalid comment" })
+        res.status(400).json({ message: req.t("recruiting.invalidComment") })
         return
       }
 
@@ -338,7 +339,7 @@ recruitingRouter.post(
       comment_id: comments[0].comment_id,
     })
 
-    res.json({ message: "Success!" })
+    res.json({ message: req.t("success.generic") })
   },
 )
 
@@ -347,7 +348,7 @@ recruitingRouter.get("/org/:spectrum_id", async function (req, res) {
   const contractor = await database.getContractorSafe({ spectrum_id })
 
   if (!contractor) {
-    res.status(400).json({ message: "Invalid contractor" })
+    res.status(400).json({ message: req.t("recruiting.invalidContractor") })
     return
   }
 
@@ -356,7 +357,7 @@ recruitingRouter.get("/org/:spectrum_id", async function (req, res) {
   })
 
   if (!post) {
-    res.status(400).json({ message: "Invalid post" })
+    res.status(400).json({ message: req.t("recruiting.invalidPost") })
     return
   }
 
