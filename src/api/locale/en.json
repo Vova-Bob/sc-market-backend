@@ -26,7 +26,8 @@
     "success": "Success"
   },
   "errors": {
-    "missingPermissions": "Missing permissions"
+    "missingPermissions": "Missing permissions",
+    "noPermissions": "No permissions"
   },
   "auth": {
     "unauthenticated": "Unauthenticated"
@@ -38,7 +39,11 @@
     "invalidPost": "Invalid post",
     "invalidComment": "Invalid comment"
   },
+  "comments": {
+    "invalid": "Invalid comment",
+    "invalidArgument": "Invalid argument"
+  },
   "success": {
-    "generic": "Success!"
+    "generic": "Success"
   }
 }

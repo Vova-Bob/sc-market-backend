@@ -26,7 +26,8 @@
     "success": "Успіх"
   },
   "errors": {
-    "missingPermissions": "Недостатньо прав"
+    "missingPermissions": "Недостатньо прав",
+    "noPermissions": "Немає прав"
   },
   "auth": {
     "unauthenticated": "Не авторизовано"
@@ -38,7 +39,11 @@
     "invalidPost": "Некоректний пост",
     "invalidComment": "Некоректний коментар"
   },
+  "comments": {
+    "invalid": "Некоректний коментар",
+    "invalidArgument": "Некоректний аргумент"
+  },
   "success": {
-    "generic": "Успіх!"
+    "generic": "Успіх"
   }
 }
