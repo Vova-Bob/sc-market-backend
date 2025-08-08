@@ -660,14 +660,18 @@ offerRouter.put(
         if (!service) {
           res
             .status(400)
-            .json(createErrorResponse({ error: "Invalid service" }))
+            .json(
+              createErrorResponse({ error: req.t("offers.invalidService") }),
+            )
           return
         }
 
         if (service.user_id && service.user_id !== session.assigned_id) {
           res
             .status(400)
-            .json(createErrorResponse({ error: "Invalid service" }))
+            .json(
+              createErrorResponse({ error: req.t("offers.invalidService") }),
+            )
           return
         }
 
@@ -677,7 +681,9 @@ offerRouter.put(
         ) {
           res
             .status(400)
-            .json(createErrorResponse({ error: "Invalid service" }))
+            .json(
+              createErrorResponse({ error: req.t("offers.invalidService") }),
+            )
           return
         }
       }
@@ -773,7 +779,9 @@ offersRouter.post(
     if (req.offer_session!.thread_id) {
       res
         .status(409)
-        .json(createErrorResponse({ message: "Offer already has a thread!" }))
+        .json(
+          createErrorResponse({ message: req.t("offers.threadExists") }),
+        )
       return
     }
 
@@ -782,7 +790,9 @@ offersRouter.post(
       if (bot_response.result.failed) {
         res
           .status(500)
-          .json(createErrorResponse({ message: bot_response.result.message }))
+          .json(
+            createErrorResponse({ message: req.t(bot_response.result.message) }),
+          )
         return
       }
 
@@ -793,7 +803,9 @@ offersRouter.post(
       logger.error("Failed to create thread", e)
       res
         .status(500)
-        .json(createErrorResponse({ message: "An unknown error occurred" }))
+        .json(
+          createErrorResponse({ message: req.t("errors.unknown") }),
+        )
       return
     }
     res.status(201).json(
@@ -944,24 +956,30 @@ offersRouter.get(
   async (req, res) => {
     const user = req.user as User
     const args = await convert_offer_search_query(req)
-    if (!(args.contractor_id || args.assigned_id || args.customer_id)) {
-      if (user.role !== "admin") {
-        res.status(400).json(createErrorResponse("Missing permissions."))
+      if (!(args.contractor_id || args.assigned_id || args.customer_id)) {
+        if (user.role !== "admin") {
+          res
+            .status(400)
+            .json(createErrorResponse(req.t("errors.missingPermissions")))
+          return
+        }
+      }
+
+      if (args.contractor_id) {
+        if (!(await is_member(args.contractor_id, user.user_id))) {
+          res
+            .status(400)
+            .json(createErrorResponse(req.t("errors.missingPermissions")))
+          return
+        }
+      }
+
+      if (args.assigned_id && args.assigned_id !== user.user_id) {
+        res
+          .status(400)
+          .json(createErrorResponse(req.t("errors.missingPermissions")))
         return
       }
-    }
-
-    if (args.contractor_id) {
-      if (!(await is_member(args.contractor_id, user.user_id))) {
-        res.status(400).json(createErrorResponse("Missing permissions."))
-        return
-      }
-    }
-
-    if (args.assigned_id && args.assigned_id !== user.user_id) {
-      res.status(400).json(createErrorResponse("Missing permissions."))
-      return
-    }
 
     const result = await search_offer_sessions(args)
 

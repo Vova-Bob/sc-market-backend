@@ -124,6 +124,11 @@
   "success": {
     "generic": "Success"
   },
+  "offers": {
+    "invalidService": "Invalid service",
+    "threadExists": "Offer already has a thread",
+    "invalidOffer": "Invalid offer"
+  },
   "orders": {
     "invalidStatus": "Invalid status",
     "closedStatusChange": "Cannot change status for closed order",

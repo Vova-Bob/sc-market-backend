@@ -124,6 +124,11 @@
   "success": {
     "generic": "Успіх"
   },
+  "offers": {
+    "invalidService": "Некоректна послуга",
+    "threadExists": "Пропозиція вже має тему",
+    "invalidOffer": "Некоректна пропозиція"
+  },
   "orders": {
     "invalidStatus": "Некоректний статус",
     "closedStatusChange": "Неможливо змінити статус закритого замовлення",
