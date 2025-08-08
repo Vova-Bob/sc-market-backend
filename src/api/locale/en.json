@@ -51,6 +51,9 @@
     "invalidContent": "Invalid content",
     "invalidUser": "Invalid user"
   },
+  "deliveries": {
+    "missingFields": "Missing required fields"
+  },
   "transactions": {
     "invalid": "Invalid transaction",
     "missingFields": "Missing required fields",

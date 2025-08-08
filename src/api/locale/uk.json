@@ -51,6 +51,9 @@
     "invalidContent": "Некоректний вміст",
     "invalidUser": "Некоректний користувач"
   },
+  "deliveries": {
+    "missingFields": "Відсутні необхідні поля"
+  },
   "transactions": {
     "invalid": "Некоректна транзакція",
     "missingFields": "Відсутні необхідні поля",

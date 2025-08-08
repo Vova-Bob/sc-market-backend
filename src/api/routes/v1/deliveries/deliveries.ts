@@ -33,7 +33,7 @@ deliveryRouter.post("/create", userAuthorized, async (req, res, next) => {
   } = req.body
 
   if (!start || !end || !order_id || !ship_id) {
-    res.status(400).json({ error: "Missing required fields" })
+    res.status(400).json({ error: req.t("deliveries.missingFields") })
     return
   }
 
@@ -80,7 +80,7 @@ deliveryRouter.post("/create", userAuthorized, async (req, res, next) => {
     status: "pending",
   })
 
-  res.json({ result: "Success" })
+  res.json({ result: req.t("success.generic") })
 })
 
 export const deliveriesRouter = express.Router()
