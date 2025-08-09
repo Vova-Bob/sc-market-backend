@@ -634,7 +634,7 @@ offerRouter.put(
         res.json(createResponse({ order_id: order.order_id }))
         return
       } else {
-        res.json(createResponse({ result: "Success" }))
+        res.json(createResponse({ result: req.t("success.generic") }))
         return
       }
     } else {
@@ -719,7 +719,7 @@ offerRouter.put(
         console.error(e)
       }
 
-      res.json(createResponse({ status: "Success" }))
+      res.json(createResponse({ status: req.t("success.generic") }))
     }
   },
 )
@@ -810,7 +810,7 @@ offersRouter.post(
     }
     res.status(201).json(
       createResponse({
-        result: "Success",
+        result: req.t("success.generic"),
       }),
     )
   },

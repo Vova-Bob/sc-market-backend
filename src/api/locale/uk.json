@@ -32,10 +32,16 @@
     "internalServer": "Внутрішня помилка сервера",
     "unauthorized": "Немає доступу",
     "invalidUrl": "Некоректний URL",
+    "invalidBody": "Некоректне тіло запиту",
+    "invalidArguments": "Некоректні аргументи",
+    "invalidActions": "Некоректні дії",
+    "invalidUser": "Некоректний користувач",
+    "invalidContractor": "Некоректний підрядник",
     "unknown": "Сталася невідома помилка"
   },
   "auth": {
-    "unauthenticated": "Не авторизовано"
+    "unauthenticated": "Не авторизовано",
+    "notVerified": "Ваш акаунт не підтверджено."
   },
   "contracts": {
     "invalidContractor": "Некоректний підрядник",
@@ -120,7 +126,18 @@
     "cannotFulfillOwnOrder": "Неможливо виконати власне замовлення",
     "invalidBuyOrder": "Некоректне замовлення на купівлю",
     "itemNameRequired": "Потрібна назва товару",
-    "gameItemNotFound": "Ігровий предмет не знайдено"
+    "gameItemNotFound": "Ігровий предмет не знайдено",
+    "delivery": {
+      "itemSoldTitle": "Продано товар: {{title}} (x{{quantity}}) для {{username}}",
+      "itemSoldDescription": "Завершіть доставку проданого товару {{title}} (x{{quantity}}) для {{username}}\n\n{{description}}",
+      "completeMessage": "Завершіть доставку проданих товарів до [{{username}}](https://sc-market.space/user/{{username}})\n",
+      "listItem": "- [{{title}}](https://sc-market.space/market/{{listingId}}) ({{price}} aUEC x{{quantity}})\n",
+      "total": "- Разом: {{total}} aUEC\n",
+      "userOffer": "- Пропозиція користувача: {{offer}} aUEC\n",
+      "noteFromBuyer": "\nПримітка від покупця:\n> {{note}}",
+      "none": "Немає",
+      "itemsSoldTitle": "Товари продані для {{username}}"
+    }
   },
   "wiki": {
     "queryTooShort": "Запит занадто короткий"
@@ -153,6 +170,43 @@
   },
   "profiles": {
     "userNotFound": "Користувача не знайдено",
-    "updateLocaleFailed": "Не вдалося оновити локаль користувача"
+    "updateLocaleFailed": "Не вдалося оновити локаль користувача",
+    "noAccess": "Немає доступу",
+    "invalidDisplayName": "Некоректне відображуване ім'я",
+    "localeUpdated": "Локаль успішно оновлено",
+    "userAlreadyRegistered": "Користувач вже зареєстрований",
+    "codeNotFound": "Код не знайдено"
+  },
+  "discord": {
+    "userDetails": "Деталі користувача Discord: <@{{discordId}}>\n\n{{description}}",
+    "status": {
+      "was": "Було: {{status}}",
+      "orderUpdated": "Статус замовлення оновлено - {{status}}",
+      "offerUpdated": "Статус пропозиції оновлено - {{status}}"
+    },
+    "assigned": {
+      "description": "До цього замовлення призначено виконавця",
+      "title": "Замовлення призначено - {{username}}"
+    },
+    "fields": {
+      "offer": "Пропозиція",
+      "kind": "Тип",
+      "collateral": "Застава",
+      "rush": "Терміново",
+      "bidAmount": "Сума ставки",
+      "comment": "Коментар",
+      "newStatus": "Новий статус"
+    },
+    "usernames": {
+      "orderPlaced": "SC Market - Замовлення створено",
+      "offerReceived": "Отримано пропозицію",
+      "counterOfferReceived": "Отримано зустрічну пропозицію",
+      "bidReceived": "SC Market - Отримано ставку",
+      "orderCommentReceived": "SC Market - Отримано коментар до замовлення",
+      "orderStatusUpdated": "SC Market - Статус замовлення оновлено"
+    },
+    "thread": {
+      "orderName": "order-{{id}}"
+    }
   }
 }

@@ -20,6 +20,7 @@ import {
 } from "./webhooks.js"
 import logger from "../../../../logger/logger.js"
 import { env } from "../../../../config/env.js"
+import { t } from "./i18n.js"
 
 export const rest = new REST({ version: "10" }).setToken(
   env.DISCORD_API_KEY || "missing",
@@ -160,7 +161,9 @@ export async function rename_offer_thread(
     try {
       await rest.patch(Routes.channel(session.thread_id), {
         body: {
-          name: `order-${order.order_id.substring(0, 8)}`,
+          name: t("discord.thread.orderName", {
+            id: order.order_id.substring(0, 8),
+          }),
         },
       })
     } catch (error) {

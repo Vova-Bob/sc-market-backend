@@ -72,7 +72,8 @@
     "dev": "tsx watch src/server.ts",
     "buildrun": "build && start",
     "start": "tsx watch src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "tsx --test tests/**/*.test.ts"
   },
   "eslintConfig": {
     "root": true,

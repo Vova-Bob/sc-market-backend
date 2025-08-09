@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { User } from "../routes/v1/api-models.js"
+import { RequestWithI18n } from "../routes/v1/util/i18n.js"
 
 export function pageAuthentication(
   req: Request,
@@ -14,14 +15,14 @@ export function pageAuthentication(
 }
 
 export async function guestAuthorized(
-  req: Request,
+  req: RequestWithI18n,
   res: Response,
   next: NextFunction,
 ) {
   if (req.isAuthenticated()) {
     next()
   } else {
-    res.status(401).json({ error: "Unauthenticated" })
+    res.status(401).json({ error: req.t("auth.unauthenticated") })
   }
 }
 
@@ -43,7 +44,7 @@ export function errorHandler(
 }
 
 export async function userAuthorized(
-  req: Request,
+  req: RequestWithI18n,
   res: Response,
   next: NextFunction,
 ): Promise<void> {
@@ -51,18 +52,18 @@ export async function userAuthorized(
     if (req.isAuthenticated()) {
       const user = req.user as User
       if (user.banned) {
-        res.status(418).json({ error: "Internal server error" })
+        res.status(418).json({ error: req.t("errors.internalServer") })
         return
       }
       if (user.role === "user" || user.role === "admin") {
         next()
         return
       } else {
-        res.status(403).json({ error: "Unauthorized" })
+        res.status(403).json({ error: req.t("errors.unauthorized") })
         return
       }
     } else {
-      res.status(401).json({ error: "Unauthenticated" })
+      res.status(401).json({ error: req.t("auth.unauthenticated") })
       return
     }
   } catch (e) {
@@ -73,48 +74,48 @@ export async function userAuthorized(
 }
 
 export async function verifiedUser(
-  req: Request,
+  req: RequestWithI18n,
   res: Response,
   next: NextFunction,
 ) {
   if (req.isAuthenticated()) {
     const user = req.user as User
     if (user.banned) {
-      res.status(418).json({ error: "Internal server error" })
+      res.status(418).json({ error: req.t("errors.internalServer") })
       return
     }
     if (!user.rsi_confirmed) {
-      res.status(401).json({ error: "Your account is not verified." })
+      res.status(401).json({ error: req.t("auth.notVerified") })
       return
     } else {
       next()
       return
     }
   } else {
-    res.status(401).json({ error: "Unauthenticated" })
+    res.status(401).json({ error: req.t("auth.unauthenticated") })
     return
   }
 }
 
 export function adminAuthorized(
-  req: Request,
+  req: RequestWithI18n,
   res: Response,
   next: NextFunction,
 ): void {
   if (req.isAuthenticated()) {
     const user = req.user as User
     if (user.banned) {
-      res.status(418).json({ error: "Internal server error" })
+      res.status(418).json({ error: req.t("errors.internalServer") })
       return
     }
     if (user.role === "admin") {
       next()
     } else {
-      res.status(403).json({ error: "Unauthorized" })
+      res.status(403).json({ error: req.t("errors.unauthorized") })
       return
     }
   } else {
-    res.status(401).json({ error: "Unauthenticated" })
+    res.status(401).json({ error: req.t("auth.unauthenticated") })
   }
 }
 
