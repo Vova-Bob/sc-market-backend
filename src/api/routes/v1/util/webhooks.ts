@@ -12,6 +12,7 @@ import { sendDM } from "./discord.js"
 import { cdn } from "../../../../clients/cdn/cdn.js"
 import logger from "../../../../logger/logger.js"
 import { formatMarketUrl } from "./urls.js"
+import { t } from "./i18n.js"
 
 export async function createNotificationWebhook(
   name: string,
@@ -157,24 +158,25 @@ export async function generateNewOfferMessage(
         url: `https://sc-market.space/offer/${session.id}`,
         // embed description
         // - text on 3rd row
-        description: `Discord User Details: <@${customer.discord_id}>
-                        
-                        ${lastOffer.description}`,
+        description: t("discord.userDetails", {
+          discordId: customer.discord_id,
+          description: lastOffer.description,
+        }),
         // custom embed fields: bold title/name, normal content/value below title
         // - located below description, above image.
         fields: [
           {
-            name: "Offer",
+            name: t("discord.fields.offer"),
             value: `${(+lastOffer.cost).toLocaleString("en-US")} aUEC`,
           },
           {
-            name: "Kind",
+            name: t("discord.fields.kind"),
             value: lastOffer.kind,
           },
           ...(lastOffer.collateral
             ? [
                 {
-                  name: "Collateral",
+                  name: t("discord.fields.collateral"),
                   value: `${(+lastOffer.cost).toLocaleString("en-US")} aUEC`,
                 },
               ]
@@ -221,24 +223,25 @@ export async function generateNewOrderMessage(
         url: `https://sc-market.space/contract/${order.order_id}`,
         // embed description
         // - text on 3rd row
-        description: `Discord User Details: <@${customer.discord_id}>
-                        
-                        ${order.description}`,
+        description: t("discord.userDetails", {
+          discordId: customer.discord_id,
+          description: order.description,
+        }),
         // custom embed fields: bold title/name, normal content/value below title
         // - located below description, above image.
         fields: [
           {
-            name: "Offer",
+            name: t("discord.fields.offer"),
             value: `${(+order.cost).toLocaleString("en-US")} aUEC`,
           },
           {
-            name: "Kind",
+            name: t("discord.fields.kind"),
             value: order.kind,
           },
           ...(order.collateral
             ? [
                 {
-                  name: "Collateral",
+                  name: t("discord.fields.collateral"),
                   value: `${(+order.cost).toLocaleString("en-US")} aUEC`,
                 },
               ]
@@ -264,8 +267,8 @@ export async function generateStatusUpdateMessage(
         author: {
           name: order.title,
         },
-        description: `Was: ${order.status}`,
-        title: `Order Status Updated - ${newStatus}`,
+        description: t("discord.status.was", { status: order.status }),
+        title: t("discord.status.orderUpdated", { status: newStatus }),
         url: `https://sc-market.space/contract/${order.order_id}`,
         timestamp: order.timestamp.toISOString(),
       },
@@ -288,7 +291,7 @@ export async function generateOfferStatusUpdateMessage(
         author: {
           name: offer.title,
         },
-        title: `Offer Status Updated - ${newStatus}`,
+        title: t("discord.status.offerUpdated", { status: newStatus }),
         url: `https://sc-market.space/offer/${session.id}`,
         timestamp: offer.timestamp.toISOString(),
       },
@@ -310,8 +313,8 @@ export async function generateAssignedMessage(
         author: {
           name: order.title,
         },
-        description: `Someone has been assigned to fulfill this order`,
-        title: `Order Assigned - ${assigned.username}`,
+        description: t("discord.assigned.description"),
+        title: t("discord.assigned.title", { username: assigned.username }),
         url: `https://sc-market.space/contract/${order.order_id}`,
         timestamp: order.timestamp.toISOString(),
       },
@@ -417,7 +420,7 @@ async function sendOrderWebhook(
   return await sendWebhook(
     {
       // the username to be displayed
-      username: "SC Market - Order Placed",
+      username: t("discord.usernames.orderPlaced"),
       // the avatar to be displayed
       avatar_url: "https://sc-market.space/assets/BG0TEXT1SHADOW1-Cqbbzppd.png",
 
@@ -448,21 +451,21 @@ async function sendOrderWebhook(
           // - located below description, above image.
           fields: [
             {
-              name: "Offer",
+              name: t("discord.fields.offer"),
               value: `${(+order.cost).toLocaleString("en-US")} aUEC`,
             },
             {
-              name: "Kind",
+              name: t("discord.fields.kind"),
               value: order.kind,
             },
             {
-              name: "Rush",
-              value: order.rush ? "True" : "False",
+              name: t("discord.fields.rush"),
+              value: order.rush ? t("common.yes") : t("common.no"),
             },
             ...(order.collateral
               ? [
                   {
-                    name: "Collateral",
+                    name: t("discord.fields.collateral"),
                     value: `${(+order.cost).toLocaleString("en-US")} aUEC`,
                   },
                 ]
@@ -488,9 +491,10 @@ async function sendOfferWebhook(
   return await sendWebhook(
     {
       // the username to be displayed
-      username: `SC Market - ${
-        type === "offer_create" ? "Offer Received" : "Counter Offer Received"
-      }`,
+      username:
+        type === "offer_create"
+          ? t("discord.usernames.offerReceived")
+          : t("discord.usernames.counterOfferReceived"),
       // the avatar to be displayed
       avatar_url: "https://sc-market.space/assets/BG0TEXT1SHADOW1-Cqbbzppd.png",
 
@@ -521,11 +525,11 @@ async function sendOfferWebhook(
           // - located below description, above image.
           fields: [
             {
-              name: "Offer",
+              name: t("discord.fields.offer"),
               value: `${(+most_recent.cost).toLocaleString("en-US")} aUEC`,
             },
             {
-              name: "Kind",
+              name: t("discord.fields.kind"),
               value: most_recent.kind,
             },
           ],
@@ -572,7 +576,7 @@ async function marketBidWebhook(
   const bidder = await database.getMinimalUser({ user_id: bid.user_bidder_id })
   return await sendWebhook(
     {
-      username: "SC Market - Bid Received",
+      username: t("discord.usernames.bidReceived"),
       // the avatar to be displayed
       avatar_url: "https://sc-market.space/assets/BG0TEXT1SHADOW1-Cqbbzppd.png",
       // // enable mentioning of individual users or roles, but not @everyone/@here
@@ -601,7 +605,7 @@ async function marketBidWebhook(
           // - located below description, above image.
           fields: [
             {
-              name: "Bid Amount",
+              name: t("discord.fields.bidAmount"),
               value: `${(+bid.bid).toLocaleString("en-US")} aUEC`,
             },
           ],
@@ -658,7 +662,7 @@ async function orderCommentWebhook(
   const author = await database.getMinimalUser({ user_id: comment.author })
   return await sendWebhook(
     {
-      username: "SC Market - Order Comment Received",
+      username: t("discord.usernames.orderCommentReceived"),
       // the avatar to be displayed
       avatar_url: "https://sc-market.space/assets/BG0TEXT1SHADOW1-Cqbbzppd.png",
       // // enable mentioning of individual users or roles, but not @everyone/@here
@@ -687,7 +691,7 @@ async function orderCommentWebhook(
           // - located below description, above image.
           fields: [
             {
-              name: "Comment",
+              name: t("discord.fields.comment"),
               value: comment.content,
             },
           ],
@@ -765,7 +769,7 @@ async function orderStatusWebhook(
   const actor = await database.getMinimalUser({ user_id: actor_id })
   return await sendWebhook(
     {
-      username: "SC Market - Order Status Updated",
+      username: t("discord.usernames.orderStatusUpdated"),
       // the avatar to be displayed
       avatar_url: "https://sc-market.space/assets/BG0TEXT1SHADOW1-Cqbbzppd.png",
       // // enable mentioning of individual users or roles, but not @everyone/@here
@@ -794,7 +798,7 @@ async function orderStatusWebhook(
           // - located below description, above image.
           fields: [
             {
-              name: "New Status",
+              name: t("discord.fields.newStatus"),
               value: new_status,
             },
           ],

@@ -4,6 +4,7 @@ import {
   DBAuctionDetails,
   DBMarketListing,
 } from "../clients/database/db-models.js"
+import { t } from "../api/routes/v1/util/i18n.js"
 
 export async function process_auction(auction: DBAuctionDetails) {
   const complete = await database.getMarketListingComplete(auction.listing_id)
@@ -31,8 +32,17 @@ export async function process_auction(auction: DBAuctionDetails) {
         actor_id: winner.user_id,
         kind: "Delivery",
         cost: (+winning_bid.bid * quantity).toString(),
-        title: `Item Sold: ${complete.details.title} (x${quantity}) to ${winner.username}`,
-        description: `Complete the delivery of sold item ${complete.details.title} (x${quantity}) to ${winner.username}\n\n${complete.details.description}`,
+        title: t("market.delivery.itemSoldTitle", {
+          title: complete.details.title,
+          quantity,
+          username: winner.username,
+        }),
+        description: t("market.delivery.itemSoldDescription", {
+          title: complete.details.title,
+          quantity,
+          username: winner.username,
+          description: complete.details.description,
+        }),
       },
       [{ quantity, listing: complete }],
     )

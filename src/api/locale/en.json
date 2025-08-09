@@ -126,7 +126,18 @@
     "cannotFulfillOwnOrder": "Can't fulfill own order",
     "invalidBuyOrder": "Invalid buy order",
     "itemNameRequired": "Item name is required",
-    "gameItemNotFound": "Game item not found"
+    "gameItemNotFound": "Game item not found",
+    "delivery": {
+      "itemSoldTitle": "Item Sold: {{title}} (x{{quantity}}) to {{username}}",
+      "itemSoldDescription": "Complete the delivery of sold item {{title}} (x{{quantity}}) to {{username}}\n\n{{description}}",
+      "completeMessage": "Complete the delivery of sold items to [{{username}}](https://sc-market.space/user/{{username}})\n",
+      "listItem": "- [{{title}}](https://sc-market.space/market/{{listingId}}) ({{price}} aUEC x{{quantity}})\n",
+      "total": "- Total: {{total}} aUEC\n",
+      "userOffer": "- User Offer: {{offer}} aUEC\n",
+      "noteFromBuyer": "\nNote from buyer:\n> {{note}}",
+      "none": "None",
+      "itemsSoldTitle": "Items Sold to {{username}}"
+    }
   },
   "wiki": {
     "queryTooShort": "Query too short"
@@ -165,5 +176,37 @@
     "localeUpdated": "Locale updated successfully",
     "userAlreadyRegistered": "User already registered",
     "codeNotFound": "Code not found"
+  },
+  "discord": {
+    "userDetails": "Discord User Details: <@{{discordId}}>\n\n{{description}}",
+    "status": {
+      "was": "Was: {{status}}",
+      "orderUpdated": "Order Status Updated - {{status}}",
+      "offerUpdated": "Offer Status Updated - {{status}}"
+    },
+    "assigned": {
+      "description": "Someone has been assigned to fulfill this order",
+      "title": "Order Assigned - {{username}}"
+    },
+    "fields": {
+      "offer": "Offer",
+      "kind": "Kind",
+      "collateral": "Collateral",
+      "rush": "Rush",
+      "bidAmount": "Bid Amount",
+      "comment": "Comment",
+      "newStatus": "New Status"
+    },
+    "usernames": {
+      "orderPlaced": "SC Market - Order Placed",
+      "offerReceived": "Offer Received",
+      "counterOfferReceived": "Counter Offer Received",
+      "bidReceived": "SC Market - Bid Received",
+      "orderCommentReceived": "SC Market - Order Comment Received",
+      "orderStatusUpdated": "SC Market - Order Status Updated"
+    },
+    "thread": {
+      "orderName": "order-{{id}}"
+    }
   }
 }
