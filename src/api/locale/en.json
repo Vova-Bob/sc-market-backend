@@ -32,10 +32,16 @@
     "internalServer": "Internal server error",
     "unauthorized": "Unauthorized",
     "invalidUrl": "Invalid URL",
+    "invalidBody": "Invalid body",
+    "invalidArguments": "Invalid arguments",
+    "invalidActions": "Invalid actions",
+    "invalidUser": "Invalid user",
+    "invalidContractor": "Invalid contractor",
     "unknown": "An unknown error occurred"
   },
   "auth": {
-    "unauthenticated": "Unauthenticated"
+    "unauthenticated": "Unauthenticated",
+    "notVerified": "Your account is not verified."
   },
   "contracts": {
     "invalidContractor": "Invalid contractor",
@@ -153,6 +159,11 @@
   },
   "profiles": {
     "userNotFound": "User not found",
-    "updateLocaleFailed": "Failed to update user locale"
+    "updateLocaleFailed": "Failed to update user locale",
+    "noAccess": "No access",
+    "invalidDisplayName": "Invalid display name",
+    "localeUpdated": "Locale updated successfully",
+    "userAlreadyRegistered": "User already registered",
+    "codeNotFound": "Code not found"
   }
 }

@@ -952,7 +952,7 @@ ordersRouter.post(
 
     await createOrderReviewNotification(review[0])
 
-    res.status(200).json(createResponse({ result: "Success" }))
+    res.status(200).json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -1215,7 +1215,7 @@ ordersRouter.post(
     }
 
     // TODO: Submit the application
-    res.status(201).json(createResponse({ result: "Success" }))
+    res.status(201).json(createResponse({ result: req.t("success.generic") }))
   },
 )
 
@@ -1294,7 +1294,7 @@ async function updateAssigned(
     })
   }
 
-  res.status(201).json(createResponse({ result: "Success" }))
+  res.status(201).json(createResponse({ result: req.t("success.generic") }))
 }
 
 ordersRouter.post(
@@ -1801,7 +1801,7 @@ ordersRouter.post(
     }
     res.status(201).json(
       createResponse({
-        result: "Success",
+        result: req.t("success.generic"),
       }),
     )
   },

@@ -32,10 +32,16 @@
     "internalServer": "Внутрішня помилка сервера",
     "unauthorized": "Немає доступу",
     "invalidUrl": "Некоректний URL",
+    "invalidBody": "Некоректне тіло запиту",
+    "invalidArguments": "Некоректні аргументи",
+    "invalidActions": "Некоректні дії",
+    "invalidUser": "Некоректний користувач",
+    "invalidContractor": "Некоректний підрядник",
     "unknown": "Сталася невідома помилка"
   },
   "auth": {
-    "unauthenticated": "Не авторизовано"
+    "unauthenticated": "Не авторизовано",
+    "notVerified": "Ваш акаунт не підтверджено."
   },
   "contracts": {
     "invalidContractor": "Некоректний підрядник",
@@ -153,6 +159,11 @@
   },
   "profiles": {
     "userNotFound": "Користувача не знайдено",
-    "updateLocaleFailed": "Не вдалося оновити локаль користувача"
+    "updateLocaleFailed": "Не вдалося оновити локаль користувача",
+    "noAccess": "Немає доступу",
+    "invalidDisplayName": "Некоректне відображуване ім'я",
+    "localeUpdated": "Локаль успішно оновлено",
+    "userAlreadyRegistered": "Користувач вже зареєстрований",
+    "codeNotFound": "Код не знайдено"
   }
 }

@@ -283,7 +283,7 @@ export async function handleStatusUpdate(req: any, res: any, status: string) {
     await manageOrderStatusUpdateDiscord(order, status)
     await sendStatusUpdateMessage(order, status)
 
-    res.status(200).json(createResponse({ result: "Success" }))
+    res.status(200).json(createResponse({ result: req.t("success.generic") }))
   } catch (e) {
     logger.error(`Failed to update order status: ${e}`)
   }
@@ -354,7 +354,7 @@ export async function handleAssignedUpdate(req: any, res: any) {
       assigned_id: null,
     })
   }
-  res.status(200).json(createResponse({ result: "Success" }))
+  res.status(200).json(createResponse({ result: req.t("success.generic") }))
 }
 
 export async function acceptApplicant(
@@ -438,7 +438,7 @@ export async function acceptApplicant(
   await database.clearOrderApplications(req.order.order_id)
   await createOrderNotifications(newOrders[0])
 
-  res.status(201).json(createResponse({ result: "Success" }))
+  res.status(201).json(createResponse({ result: req.t("success.generic") }))
 }
 
 export async function convert_order_search_query(

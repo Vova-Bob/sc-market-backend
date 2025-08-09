@@ -91,7 +91,7 @@ export async function authorizeProfile(
   try {
     const user = await database.getUser({ username })
     if (user.user_id !== user_id) {
-      return { success: false, error: "User already registered" }
+      return { success: false, error: "profiles.userAlreadyRegistered" }
     }
   } catch {}
 
@@ -135,5 +135,5 @@ export async function authorizeProfile(
     return { success: true, error: null }
   }
 
-  return { success: false, error: "Code not found" }
+  return { success: false, error: "profiles.codeNotFound" }
 }
